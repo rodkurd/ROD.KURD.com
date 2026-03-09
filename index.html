@@ -148,11 +148,12 @@ textarea.finput{min-height:75px;resize:none}
 
 /* CARD UPLOADS */
 .card-uploads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.cup-box{background:rgba(255,255,255,.03);border:2px dashed rgba(240,165,0,.22);border-radius:var(--r2);padding:12px 8px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.cup-box{background:rgba(255,255,255,.03);border:2px dashed rgba(240,165,0,.22);border-radius:var(--r2);padding:12px 8px;text-align:center;cursor:pointer;transition:all .25s;position:relative;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:transparent;user-select:none}
 .cup-box.has-img{border-color:var(--gold);background:rgba(240,165,0,.06)}
-.cup-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
-.cup-prev{width:100%;height:80px;object-fit:cover;border-radius:8px;display:none}
-.cup-chk{position:absolute;top:5px;right:5px;background:var(--green);color:#fff;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:.7rem;font-weight:700}
+.cup-box input[type=file]{display:none}
+.cup-prev{width:100%;height:100px;object-fit:cover;border-radius:8px;display:none}
+.cup-chk{position:absolute;top:7px;right:7px;background:var(--green);color:#fff;width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:.72rem;font-weight:700}
+.cup-change{margin-top:4px;font-size:.65rem;color:var(--gold);font-weight:600;display:none}
 
 /* PRICE */
 .pricebox{background:rgba(240,165,0,.06);border:1px solid rgba(240,165,0,.2);border-radius:var(--r2);padding:12px;margin-bottom:12px}
@@ -386,14 +387,26 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
       <label class="flabel" style="margin-bottom:9px">🪪 وێنەی کارتی ناسینەوە</label>
       <div class="card-uploads">
         <div class="cup-box" id="box-f" onclick="document.getElementById('inp-f').click()">
-          <input type="file" id="inp-f" accept="image/*" capture="environment" onchange="prevCard('f',this)">
-          <img class="cup-prev" id="prev-f" alt=""><div class="cup-chk" id="chk-f">✓</div>
-          <div id="cc-f"><div style="font-size:1.8rem">🪪</div><div style="font-size:.75rem;font-weight:700;margin-top:5px">پێشەوەی کارت</div><div style="font-size:.65rem;color:var(--text3);margin-top:3px">کلیک بکە</div></div>
+          <input type="file" id="inp-f" accept="image/*" onchange="prevCard('f',this)">
+          <img class="cup-prev" id="prev-f" alt="">
+          <div class="cup-chk" id="chk-f">✓</div>
+          <div id="cc-f">
+            <div style="font-size:2rem">🪪</div>
+            <div style="font-size:.78rem;font-weight:700;margin-top:6px">پێشەوەی کارت</div>
+            <div style="font-size:.68rem;color:var(--gold);margin-top:4px;font-weight:600">📁 هەڵبژاردنی وێنە</div>
+          </div>
+          <div class="cup-change" id="chng-f">🔄 گۆڕینی وێنە</div>
         </div>
         <div class="cup-box" id="box-b" onclick="document.getElementById('inp-b').click()">
-          <input type="file" id="inp-b" accept="image/*" capture="environment" onchange="prevCard('b',this)">
-          <img class="cup-prev" id="prev-b" alt=""><div class="cup-chk" id="chk-b">✓</div>
-          <div id="cc-b"><div style="font-size:1.8rem">🪪</div><div style="font-size:.75rem;font-weight:700;margin-top:5px">دواوەی کارت</div><div style="font-size:.65rem;color:var(--text3);margin-top:3px">کلیک بکە</div></div>
+          <input type="file" id="inp-b" accept="image/*" onchange="prevCard('b',this)">
+          <img class="cup-prev" id="prev-b" alt="">
+          <div class="cup-chk" id="chk-b">✓</div>
+          <div id="cc-b">
+            <div style="font-size:2rem">🪪</div>
+            <div style="font-size:.78rem;font-weight:700;margin-top:6px">دواوەی کارت</div>
+            <div style="font-size:.68rem;color:var(--gold);margin-top:4px;font-weight:600">📁 هەڵبژاردنی وێنە</div>
+          </div>
+          <div class="cup-change" id="chng-b">🔄 گۆڕینی وێنە</div>
         </div>
       </div>
       <button class="btn btn-gold" onclick="doRegister()">تۆمارکردن و چاوەڕوانی پەسەندکردن</button>
@@ -1052,21 +1065,18 @@ function doRegister(){
   const phone=document.getElementById('rg-ph').value.trim();
   const pw=document.getElementById('rg-pw').value;
   const pw2=document.getElementById('rg-pw2').value;
-  const hf=document.getElementById('inp-f').files.length>0;
-  const hb=document.getElementById('inp-b').files.length>0;
   if(!name||!email||!phone||!pw){notif('⚠️ هەموو بەندەکان پڕ بکەرەوە','w');return;}
   if(pw!==pw2){notif('❌ وشەی تێپەڕین دووجار یەکسان نییە','e');return;}
-  if(!hf||!hb){notif('⚠️ هەر دوو لاپەڕەی کارتی ناسینەوە هەڵبژێرە','w');return;}
   const sellers=gS();
   if(sellers.find(s=>s.email===email)){notif('❌ ئەم ئیمەیڵە پێشتر تۆمار کراوە','e');return;}
-  const fF=document.getElementById('inp-f').files[0];
-  const fB=document.getElementById('inp-b').files[0];
-  const readImg=(f,cb)=>{const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(f);};
-  readImg(fF,cF=>readImg(fB,cB=>{
-    const nu={id:'s'+Date.now(),name,email,ph:phone,pw,status:'pending',date:new Date().toLocaleDateString('ar-IQ'),orders:0,cardF:cF,cardB:cB};
-    sellers.push(nu);sv(K_S,sellers);cUser=nu;saveSession(nu);
-    showPage('page-pending');notif('✓ حسابەکەت دروست کرا!','s');
-  }));
+  const inpF=document.getElementById('inp-f');
+  const inpB=document.getElementById('inp-b');
+  const cF=inpF._compressed||null;
+  const cB=inpB._compressed||null;
+  if(!cF||!cB){notif('⚠️ هەر دوو لاپەڕەی کارتی ناسینەوە هەڵبژێرە','w');return;}
+  const nu={id:'s'+Date.now(),name,email,ph:phone,pw,status:'pending',date:new Date().toLocaleDateString('ar-IQ'),orders:0,cardF:cF,cardB:cB};
+  sellers.push(nu);sv(K_S,sellers);cUser=nu;saveSession(nu);
+  showPage('page-pending');notif('✓ حسابەکەت دروست کرا!','s');
 }
 
 function doLogout(){cUser=null;cProd=null;clearSession();showPage('page-home');fp1();}
@@ -1081,15 +1091,33 @@ function setupIn(u){
 
 function prevCard(side,inp){
   if(!inp.files||!inp.files[0])return;
-  const r=new FileReader();
-  r.onload=e=>{
-    document.getElementById('prev-'+side).src=e.target.result;
-    document.getElementById('prev-'+side).style.display='block';
+  const file=inp.files[0];
+  const imgEl=new Image();
+  const url=URL.createObjectURL(file);
+  imgEl.onload=()=>{
+    URL.revokeObjectURL(url);
+    const MAX=1200;
+    const scale=Math.min(1,MAX/Math.max(imgEl.width,imgEl.height));
+    const cvs=document.createElement('canvas');
+    cvs.width=Math.round(imgEl.width*scale);
+    cvs.height=Math.round(imgEl.height*scale);
+    cvs.getContext('2d').drawImage(imgEl,0,0,cvs.width,cvs.height);
+    const data=cvs.toDataURL('image/jpeg',0.82);
+    inp._compressed=data;
+    const prevEl=document.getElementById('prev-'+side);
+    prevEl.src=data;
+    prevEl.style.display='block';
     document.getElementById('cc-'+side).style.display='none';
     document.getElementById('chk-'+side).style.display='flex';
+    const chng=document.getElementById('chng-'+side);
+    if(chng)chng.style.display='block';
     document.getElementById('box-'+side).classList.add('has-img');
   };
-  r.readAsDataURL(inp.files[0]);
+  imgEl.onerror=()=>{
+    URL.revokeObjectURL(url);
+    notif('❌ وێنەکە نەکرایەوە، دووبارە هەوڵبدەرەوە','e');
+  };
+  imgEl.src=url;
 }
 
 // ── PAGE NAV ──
