@@ -941,7 +941,7 @@ function calcPriceM(v){calcPrice(Math.min(parseInt(v)||0,cProd.max||0));}
 
 function agreePricing(){cls('sh-price');document.getElementById('ship-total').textContent=fp(cProd.price+cAdd);open('sh-ship');}
 
-function agreeShipping(){
+async function agreeShipping(){
   const n1=document.getElementById('sh-n1').value.trim();
   const p1=document.getElementById('sh-p1').value.trim();
   const a1=document.getElementById('sh-a1').value.trim();
@@ -949,7 +949,18 @@ function agreeShipping(){
   const n2=document.getElementById('sh-n2').value.trim();
   const p2=document.getElementById('sh-p2').value.trim();
   const a2=document.getElementById('sh-a2').value.trim();
-  const orders=gO();
+
+  // Fetch latest orders from Firebase first to avoid ID collision
+  let orders=[];
+  try{
+    const r=await fetch(FB_URL+'/data/bk_orders.json');
+    if(r.ok){
+      const d=await r.json();
+      if(d) orders=Array.isArray(d)?d.filter(Boolean):Object.values(d);
+      localStorage.setItem(K_O,JSON.stringify(orders));
+    }else{ orders=gO(); }
+  }catch(e){ orders=gO(); }
+
   const newOrder={
     id:'#'+String(orders.length+1).padStart(3,'0'),
     prod:cProd.name,prodId:cProd.id,
@@ -961,9 +972,26 @@ function agreeShipping(){
     date:new Date().toLocaleDateString('ar-IQ'),
     ts:Date.now()
   };
-  orders.push(newOrder);sv(K_O,orders);
+  orders.push(newOrder);
+  localStorage.setItem(K_O,JSON.stringify(orders));
+
+  // Push directly to Firebase — admin gets it instantly via SSE
+  try{
+    const allData={};
+    CLOUD_KEYS_ALL.forEach(k=>{
+      try{allData[k]=JSON.parse(localStorage.getItem(k)||'[]');}catch(e){allData[k]=[];}
+    });
+    await fetch(FB_URL+'/data.json',{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(allData)
+    });
+  }catch(e){
+    // Fallback to scheduled push
+    schedulePush();
+  }
+
   cls('sh-ship');
-  // ← redirect to My Sales
   showPage('page-my-sales');
   renderMySales();
   notif('✓ داواکاری ثبت کرا! چاوەڕی تیمەکەمان بکە','s');
@@ -1285,7 +1313,8 @@ window.addEventListener('DOMContentLoaded',async ()=>{
 
   // Pull all data and render home
   await cloudPull();
-  setInterval(cloudPull, 15000);
+  // Platform pushes directly on order, so 30s polling is enough as fallback
+  setInterval(cloudPull, 30000);
   if(!cUser) fp1();
   setInterval(()=>{ if(cUser) updateDots(); }, 8000);
 });
