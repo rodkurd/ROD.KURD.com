@@ -1,2237 +1,896 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl">
+<html lang="ckb" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>بازاڕی کوردستان — KurdBazaar</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>بازاڕی کوردستان</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════════
-   ROOT VARIABLES — LUXURY DARK KURDISH PALETTE
-══════════════════════════════════════════ */
-:root {
-  --bg-0: #080810;
-  --bg-1: #0e0e1a;
-  --bg-2: #14141f;
-  --bg-3: #1a1a28;
-  --bg-4: #222235;
-  --gold: #c9a84c;
-  --gold-light: #e8c96a;
-  --gold-dim: rgba(201,168,76,0.15);
-  --gold-border: rgba(201,168,76,0.3);
-  --emerald: #2ecc8a;
-  --emerald-dim: rgba(46,204,138,0.12);
-  --red: #e05c5c;
-  --red-dim: rgba(224,92,92,0.12);
-  --blue: #5b9cf6;
-  --blue-dim: rgba(91,156,246,0.12);
-  --text-0: #ffffff;
-  --text-1: #d4d4e8;
-  --text-2: #8888aa;
-  --text-3: #55556a;
-  --radius-sm: 8px;
-  --radius: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --shadow-gold: 0 0 30px rgba(201,168,76,0.15);
-  --shadow-card: 0 4px 30px rgba(0,0,0,0.5);
-  --transition: all 0.28s cubic-bezier(.4,0,.2,1);
+:root{
+  --bg:#07090f;--bg2:#0d1018;--card:#111520;
+  --border:rgba(255,255,255,0.07);
+  --gold:#eab308;--gold2:#fbbf24;
+  --grad:linear-gradient(135deg,#eab308,#f59e0b,#fbbf24);
+  --text:#eef2ff;--text2:#7c8799;--text3:#3d4a5c;
+  --green:#10b981;--red:#ef4444;--orange:#f97316;
+  --nav-h:60px;--bot-h:68px;
+  --r:18px;--r2:14px;--r3:12px;
 }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{font-family:'Noto Sans Arabic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:15px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(234,179,8,.25);border-radius:4px}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 80% 0%,rgba(234,179,8,.05) 0%,transparent 55%),radial-gradient(ellipse at 10% 80%,rgba(245,158,11,.03) 0%,transparent 45%);pointer-events:none;z-index:0}
 
-/* ══════════════════════════════════════════ BASE ══ */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Cairo', 'Tajawal', sans-serif;
-  background: var(--bg-0);
-  color: var(--text-1);
-  direction: rtl;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-a { text-decoration: none; color: inherit; }
-button, input, select, textarea {
-  font-family: inherit;
-  direction: rtl;
-}
-img { max-width:100%; display:block; }
-::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-track { background: var(--bg-1); }
-::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius:3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+/* PAGES */
+.page{display:none;min-height:100vh;position:relative;z-index:1;padding-bottom:calc(var(--bot-h)+16px)}
+.page.active{display:block;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-/* ══════════════════════════════════════════ PAGE SYSTEM ══ */
-.page { display:none; }
-.page.active { display:block; animation: fadeIn 0.35s ease; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+/* TOP NAV */
+.topnav{position:sticky;top:0;z-index:500;height:var(--nav-h);background:rgba(7,9,15,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:10px}
+.logo{display:flex;align-items:center;gap:9px;cursor:pointer;flex-shrink:0}
+.logo-icon{width:36px;height:36px;background:var(--grad);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.logo-text{font-size:1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tnav-right{display:flex;align-items:center;gap:8px}
+.tnav-btn{padding:7px 13px;border-radius:9px;font-family:inherit;font-size:.8rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+.tnav-ghost{background:rgba(255,255,255,.05);color:var(--text2);border:1px solid var(--border)}
+.tnav-gold{background:var(--grad);color:#000;box-shadow:0 3px 12px rgba(234,179,8,.28)}
 
-/* ══════════════════════════════════════════ BACKGROUND PATTERN ══ */
-body::before {
-  content:'';
-  position: fixed;
-  inset:0;
-  background:
-    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(201,168,76,0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(91,156,246,0.03) 0%, transparent 50%);
-  pointer-events:none;
-  z-index:0;
-}
-.geo-pattern {
-  position: fixed;
-  inset: 0;
-  opacity: 0.025;
-  background-image:
-    repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
-    repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-}
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:500;height:var(--bot-h);background:rgba(7,9,15,.96);backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:0 4px;padding-bottom:env(safe-area-inset-bottom,0)}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:7px 10px;border-radius:12px;transition:all .2s;flex:1;max-width:72px;position:relative}
+.bnav-item.active{background:rgba(234,179,8,.08)}
+.bnav-icon{font-size:1.2rem;color:var(--text3);transition:color .2s}
+.bnav-lbl{font-size:.65rem;font-weight:600;color:var(--text3);transition:color .2s;text-align:center}
+.bnav-item.active .bnav-icon,.bnav-item.active .bnav-lbl{color:var(--gold)}
+.bnav-dot{position:absolute;top:5px;right:10px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1.5px solid var(--bg);display:none}
 
-/* ══════════════════════════════════════════ NAVBAR ══ */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(8,8,16,0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--gold-border);
-  padding: 0 30px;
-  height: 68px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.nav-logo-icon {
-  width: 38px; height: 38px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: var(--bg-0);
-  font-weight: 900;
-  box-shadow: 0 0 16px rgba(201,168,76,0.4);
-}
-.nav-logo-text {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-0);
-  letter-spacing: -0.5px;
-}
-.nav-logo-text span { color: var(--gold); }
-.nav-search {
-  flex: 1;
-  max-width: 500px;
-  position: relative;
-}
-.nav-search input {
-  width: 100%;
-  background: var(--bg-3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 40px;
-  padding: 9px 20px 9px 45px;
-  color: var(--text-0);
-  font-size: 14px;
-  outline: none;
-  transition: var(--transition);
-}
-.nav-search input:focus {
-  border-color: var(--gold-border);
-  background: var(--bg-4);
-  box-shadow: 0 0 0 3px var(--gold-dim);
-}
-.nav-search input::placeholder { color: var(--text-3); }
-.nav-search-btn {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--text-3);
-  cursor: pointer;
-  font-size: 14px;
-  transition: var(--transition);
-}
-.nav-search-btn:hover { color: var(--gold); }
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-right: auto;
-}
-.nav-btn {
-  padding: 8px 18px;
-  border-radius: 40px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  white-space: nowrap;
-}
-.nav-btn-ghost {
-  background: transparent;
-  color: var(--text-1);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.nav-btn-ghost:hover {
-  background: var(--bg-4);
-  border-color: var(--gold-border);
-  color: var(--gold);
-}
-.nav-btn-gold {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--bg-0);
-  font-weight: 700;
-  box-shadow: 0 4px 16px rgba(201,168,76,0.3);
-}
-.nav-btn-gold:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(201,168,76,0.45);
-}
-.nav-user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 14px;
-  border-radius: 40px;
-  background: var(--bg-3);
-  border: 1px solid var(--gold-border);
-  cursor: pointer;
-}
-.nav-user-avatar {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--bg-0);
-}
-.nav-user-name { font-size: 13px; font-weight: 600; color: var(--text-0); }
-.pending-badge {
-  background: rgba(224,92,92,0.2);
-  color: var(--red);
-  border: 1px solid rgba(224,92,92,0.3);
-  padding: 2px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-}
+/* HERO */
+.hero{padding:24px 16px 16px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:240px;height:120px;background:radial-gradient(ellipse,rgba(234,179,8,.07) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.22);border-radius:50px;padding:4px 12px;font-size:.75rem;color:var(--gold2);margin-bottom:12px;animation:pb 3s infinite}
+@keyframes pb{0%,100%{border-color:rgba(234,179,8,.22)}50%{border-color:rgba(234,179,8,.55)}}
+.hero-title{font-size:1.65rem;font-weight:900;line-height:1.2;margin-bottom:8px;background:linear-gradient(135deg,#fff 0%,var(--gold2) 55%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:.85rem;color:var(--text2);line-height:1.7;margin-bottom:16px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:2px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 8px;text-align:center}
+.stat-n{font-size:1.2rem;font-weight:800;color:var(--gold);display:block}
+.stat-l{font-size:.68rem;color:var(--text2);margin-top:1px}
 
-/* ══════════════════════════════════════════ HERO ══ */
-.hero {
-  position: relative;
-  padding: 80px 40px 60px;
-  text-align: center;
-  overflow: hidden;
-  z-index: 1;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -100px; left: 50%;
-  transform: translateX(-50%);
-  width: 600px; height: 400px;
-  background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 18px;
-  background: var(--gold-dim);
-  border: 1px solid var(--gold-border);
-  border-radius: 40px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--gold);
-  margin-bottom: 28px;
-  letter-spacing: 0.5px;
-}
-.hero h1 {
-  font-size: clamp(32px, 5vw, 58px);
-  font-weight: 900;
-  color: var(--text-0);
-  line-height: 1.2;
-  margin-bottom: 18px;
-  letter-spacing: -1px;
-}
-.hero h1 .highlight {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero p {
-  font-size: 17px;
-  color: var(--text-2);
-  max-width: 560px;
-  margin: 0 auto 40px;
-  line-height: 1.7;
-  font-weight: 400;
-}
-.hero-ctas {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.btn-primary {
-  padding: 14px 34px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--bg-0);
-  font-weight: 800;
-  font-size: 15px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  box-shadow: 0 6px 24px rgba(201,168,76,0.35);
-  letter-spacing: 0.3px;
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(201,168,76,0.5);
-}
-.btn-secondary {
-  padding: 14px 30px;
-  background: transparent;
-  color: var(--text-0);
-  font-weight: 700;
-  font-size: 15px;
-  border: 1.5px solid rgba(255,255,255,0.15);
-  border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-.btn-secondary:hover {
-  background: var(--bg-3);
-  border-color: var(--gold-border);
-  color: var(--gold);
-}
-.hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 60px;
-  padding-top: 40px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  flex-wrap: wrap;
-}
-.hero-stat h3 { font-size: 28px; font-weight: 900; color: var(--gold); }
-.hero-stat p { font-size: 13px; color: var(--text-2); margin-top: 4px; }
+/* SEARCH */
+.searchbox{padding:0 16px 12px}
+.search-wrap{position:relative}
+.search-inp{width:100%;padding:11px 42px 11px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);color:var(--text);font-family:inherit;font-size:.9rem;outline:none;transition:all .3s}
+.search-inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(234,179,8,.1)}
+.search-inp::placeholder{color:var(--text3)}
+.search-ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:.95rem;pointer-events:none}
 
-/* ══════════════════════════════════════════ CATEGORIES ══ */
-.categories-strip {
-  padding: 0 30px 30px;
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  z-index: 1;
-  position: relative;
-}
-.categories-strip::-webkit-scrollbar { display:none; }
-.cat-chip {
-  padding: 8px 22px;
-  background: var(--bg-3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 50px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-2);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.cat-chip:hover, .cat-chip.active {
-  background: var(--gold-dim);
-  border-color: var(--gold-border);
-  color: var(--gold);
-}
+/* CATS */
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 16px 12px;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cat{padding:6px 14px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.cat.active{background:rgba(234,179,8,.1);border-color:var(--gold);color:var(--gold)}
 
-/* ══════════════════════════════════════════ SECTION HEADER ══ */
-.section-head {
-  padding: 10px 30px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  z-index: 1;
-  position: relative;
-}
-.section-head h2 {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--text-0);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.section-head h2::before {
-  content: '';
-  display: inline-block;
-  width: 4px;
-  height: 22px;
-  background: linear-gradient(180deg, var(--gold), var(--gold-light));
-  border-radius: 2px;
-}
-.section-count {
-  font-size: 12px;
-  color: var(--text-3);
-  font-weight: 500;
-}
+.sec-title{font-size:1rem;font-weight:700;margin:0 16px 12px;display:flex;align-items:center;gap:10px}
+.sec-title::before{content:'';width:3px;height:18px;background:var(--grad);border-radius:3px;flex-shrink:0}
 
-/* ══════════════════════════════════════════ PRODUCT GRID ══ */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-  padding: 0 30px 40px;
-  position: relative;
-  z-index: 1;
-}
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 16px}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .22s;position:relative;cursor:pointer;-webkit-user-select:none}
+.pcard:active{transform:scale(.97);border-color:rgba(234,179,8,.3)}
+.pcard-img{width:100%;height:120px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;background:linear-gradient(135deg,#131928,#0d1117);position:relative;overflow:hidden}
+.pcard-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.pcard-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(to top,var(--card),transparent)}
+.pcard-badge{position:absolute;top:7px;right:7px;background:var(--grad);color:#000;font-size:.62rem;font-weight:700;padding:3px 7px;border-radius:50px;z-index:2}
+.pcard-body{padding:9px 10px 11px}
+.pcard-cat{font-size:.65rem;color:var(--gold);font-weight:700;margin-bottom:3px}
+.pcard-name{font-size:.83rem;font-weight:700;line-height:1.35;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pcard-price{font-size:.85rem;font-weight:800;color:var(--gold)}
+.pcard-price small{font-size:.62rem;font-weight:500;color:var(--text3)}
+.pcard-btn{display:block;width:100%;margin-top:7px;padding:7px;background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.25);border-radius:10px;color:var(--gold);font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.pcard-btn:active{background:var(--grad);color:#000;border-color:transparent}
+.pcard-wait{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(7,9,15,.78);backdrop-filter:blur(3px);border-radius:var(--r);gap:4px;z-index:5}
+.pcard-wait span{font-size:.66rem;color:var(--text3);font-weight:600}
 
-/* ══════════════════════════════════════════ PRODUCT CARD ══ */
-.product-card {
-  background: var(--bg-2);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;
-  group: true;
-}
-.product-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--gold-border);
-  box-shadow: var(--shadow-gold), var(--shadow-card);
-}
-.product-card-img {
-  width: 100%;
-  height: 200px;
-  background: var(--bg-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 72px;
-  position: relative;
-  overflow: hidden;
-}
-.product-card-img::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: linear-gradient(transparent, var(--bg-2));
-}
-.product-card-discount {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: var(--red);
-  color: white;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 800;
-  z-index: 1;
-}
-.product-card-body { padding: 18px; }
-.product-card-cat {
-  font-size: 11px;
-  color: var(--gold);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.product-card-name {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text-0);
-  margin-bottom: 8px;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.product-card-seller {
-  font-size: 12px;
-  color: var(--text-3);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.product-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-.product-price {
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--gold);
-}
-.product-price-unit { font-size: 12px; color: var(--text-3); font-weight: 400; }
-.product-stock {
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 700;
-}
-.stock-ok { background: var(--emerald-dim); color: var(--emerald); }
-.stock-low { background: rgba(224,180,92,0.12); color: #e0b45c; }
-.stock-out { background: var(--red-dim); color: var(--red); }
+/* SOLD ITEMS PAGE */
+.sold-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;margin-bottom:10px;position:relative;overflow:hidden}
+.sold-item::before{content:'';position:absolute;top:0;right:0;bottom:0;width:3px;background:var(--orange)}
+.sold-wait::before{background:var(--orange)}
+.sold-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sold-img{width:46px;height:46px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#131928,#0d1117);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.sold-img img{width:100%;height:100%;object-fit:cover}
+.sold-prod-name{font-size:.9rem;font-weight:700;margin-bottom:2px}
+.sold-id{font-size:.7rem;color:var(--text3)}
+.sold-status{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:50px;font-size:.7rem;font-weight:700;margin-bottom:8px}
+.ss-wait{background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.25)}
+.ss-done{background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.25)}
+.sold-row{display:flex;justify-content:space-between;font-size:.8rem;padding:3px 0}
+.sold-lbl{color:var(--text2)}.sold-val{font-weight:700}
+.sold-val.gold{color:var(--gold)}.sold-val.green{color:var(--green)}
 
-/* ══════════════════════════════════════════ PRODUCT DETAIL PAGE ══ */
-.detail-back {
-  padding: 20px 30px 0;
-  position: relative;
-  z-index: 1;
-}
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 20px;
-  background: var(--bg-3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 40px;
-  color: var(--text-2);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  border: none;
-}
-.back-btn:hover { background: var(--bg-4); color: var(--gold); }
-.detail-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 40px;
-  padding: 30px;
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-@media(max-width:768px){ .detail-wrap { grid-template-columns:1fr; } }
-.detail-img-box {
-  background: var(--bg-2);
-  border-radius: var(--radius-xl);
-  border: 1px solid rgba(255,255,255,0.05);
-  height: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 120px;
-  position: relative;
-  overflow: hidden;
-}
-.detail-img-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
-}
-.detail-right {}
-.detail-cat {
-  font-size: 12px;
-  color: var(--gold);
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.detail-name {
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--text-0);
-  line-height: 1.3;
-  margin-bottom: 14px;
-  letter-spacing: -0.5px;
-}
-.detail-seller-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 22px;
-  padding: 12px 16px;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.04);
-}
-.detail-seller-avatar {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--bg-0);
-  flex-shrink: 0;
-}
-.detail-seller-info p { font-size: 13px; font-weight: 700; color: var(--text-0); }
-.detail-seller-info span { font-size: 11px; color: var(--text-3); }
-.detail-price-box {
-  padding: 20px;
-  background: var(--bg-3);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--gold-border);
-  margin-bottom: 20px;
-}
-.detail-price-label { font-size: 12px; color: var(--text-3); font-weight: 600; margin-bottom: 6px; }
-.detail-price-big {
-  font-size: 38px;
-  font-weight: 900;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.detail-price-sub { font-size: 13px; color: var(--text-2); }
-.detail-desc {
-  font-size: 14px;
-  color: var(--text-2);
-  line-height: 1.8;
-  margin-bottom: 22px;
-}
-.detail-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-.detail-meta-item {
-  padding: 12px 14px;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.04);
-}
-.detail-meta-item label { font-size: 11px; color: var(--text-3); display: block; margin-bottom: 4px; }
-.detail-meta-item span { font-size: 14px; font-weight: 700; color: var(--text-0); }
-.detail-buy-btn {
-  width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--bg-0);
-  font-weight: 900;
-  font-size: 16px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  box-shadow: 0 6px 24px rgba(201,168,76,0.35);
-  letter-spacing: 0.3px;
-}
-.detail-buy-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(201,168,76,0.5);
-}
-.detail-buy-btn:disabled {
-  background: var(--bg-4);
-  color: var(--text-3);
-  box-shadow: none;
-  cursor: not-allowed;
-  transform: none;
-}
-.pending-notice {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px 18px;
-  background: rgba(224,92,92,0.08);
-  border: 1px solid rgba(224,92,92,0.2);
-  border-radius: var(--radius);
-  margin-top: 14px;
-}
-.pending-notice i { color: var(--red); font-size: 18px; margin-top: 2px; flex-shrink: 0; }
-.pending-notice p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-.pending-notice strong { color: var(--red); }
+/* SELLER STATS */
+.seller-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px;margin-bottom:18px}
+.sstat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:14px;text-align:center}
+.sstat-n{font-size:1.5rem;font-weight:900;display:block;margin-bottom:2px}
+.sstat-l{font-size:.72rem;color:var(--text2)}
 
-/* ══════════════════════════════════════════ MODAL OVERLAY ══ */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 9000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
-.modal-box {
-  background: var(--bg-2);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-xl);
-  width: 100%;
-  max-width: 560px;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 20px 80px rgba(0,0,0,0.7), var(--shadow-gold);
-}
-.modal-box::-webkit-scrollbar { width:4px; }
-.modal-header {
-  padding: 28px 28px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  position: sticky;
-  top: 0;
-  background: var(--bg-2);
-  z-index: 2;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-}
-.modal-header h3 {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-0);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.modal-header h3 i { color: var(--gold); }
-.modal-header p { font-size: 13px; color: var(--text-3); margin-top: 4px; }
-.modal-close {
-  position: absolute;
-  top: 22px;
-  left: 22px;
-  width: 32px; height: 32px;
-  background: var(--bg-4);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-2);
-  font-size: 14px;
-  transition: var(--transition);
-}
-.modal-close:hover { background: var(--red-dim); color: var(--red); }
-.modal-body { padding: 24px 28px; }
-.modal-footer {
-  padding: 20px 28px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-}
+/* OVERLAY/SHEET */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);z-index:1000;align-items:flex-end;justify-content:center}
+.overlay.active{display:flex;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--card);border-radius:24px 24px 0 0;border:1px solid rgba(234,179,8,.12);border-bottom:none;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;padding:0 0 calc(env(safe-area-inset-bottom,0px)+14px);animation:slideUp .35s cubic-bezier(.34,1.1,.64,1);scrollbar-width:thin;scrollbar-color:var(--gold) transparent}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet-handle{width:38px;height:4px;background:rgba(255,255,255,.12);border-radius:4px;margin:11px auto 0}
+.sheet-head{padding:13px 18px 13px;border-bottom:1px solid var(--border);margin-bottom:14px;position:sticky;top:0;background:var(--card);z-index:10}
+.sheet-close{position:absolute;top:13px;left:14px;width:30px;height:30px;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--text2)}
+.sheet-title{font-size:1rem;font-weight:800;text-align:center}
+.sheet-sub{font-size:.8rem;color:var(--text2);text-align:center;margin-top:3px;line-height:1.55}
+.sheet-body{padding:0 14px}
 
-/* ══════════════════════════════════════════ STEPS ══ */
-.steps-bar {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 30px;
-  padding: 0 4px;
-}
-.step-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-}
-.step-num {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  border: 2px solid var(--bg-4);
-  background: var(--bg-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--text-3);
-  flex-shrink: 0;
-  transition: var(--transition);
-}
-.step-label { font-size: 12px; color: var(--text-3); font-weight: 600; }
-.step-line {
-  flex: 1;
-  height: 2px;
-  background: var(--bg-4);
-  margin: 0 8px;
-}
-.step-item.active .step-num {
-  background: var(--gold-dim);
-  border-color: var(--gold);
-  color: var(--gold);
-}
-.step-item.active .step-label { color: var(--gold); }
-.step-item.done .step-num {
-  background: var(--emerald-dim);
-  border-color: var(--emerald);
-  color: var(--emerald);
-}
-.step-item.done .step-line { background: var(--emerald); }
+/* STEPS */
+.steps{display:flex;align-items:center;justify-content:center;gap:5px;margin-bottom:10px}
+.step{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;border:2px solid var(--border);color:var(--text3);transition:all .3s;flex-shrink:0}
+.step.active{background:var(--grad);border-color:var(--gold);color:#000;box-shadow:0 0 12px rgba(234,179,8,.4)}
+.step.done{background:rgba(16,185,129,.12);border-color:var(--green);color:var(--green)}
+.stepline{width:22px;height:2px;background:var(--border);border-radius:2px;flex-shrink:0}
+.stepline.done{background:var(--green)}
 
-/* ══════════════════════════════════════════ PRICING MODAL ══ */
-.pricing-product-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.05);
-  margin-bottom: 22px;
-}
-.pricing-product-emoji { font-size: 36px; }
-.pricing-product-info h4 { font-size: 15px; font-weight: 700; color: var(--text-0); }
-.pricing-product-info p { font-size: 13px; color: var(--text-3); margin-top: 2px; }
+/* FORM */
+.fgroup{margin-bottom:12px}
+.flabel{display:block;font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:6px}
+.finput{width:100%;padding:10px 13px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r3);color:var(--text);font-family:inherit;font-size:.88rem;outline:none;transition:all .3s;direction:rtl}
+.finput:focus{border-color:var(--gold);background:rgba(234,179,8,.04);box-shadow:0 0 0 3px rgba(234,179,8,.08)}
+.finput::placeholder{color:var(--text3)}
+textarea.finput{min-height:75px;resize:none}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 
-.pricing-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.pricing-row:last-child { border-bottom: none; }
-.pricing-row label { font-size: 13px; color: var(--text-2); font-weight: 600; }
-.pricing-value { font-size: 16px; font-weight: 800; color: var(--text-0); }
-.pricing-value.gold { color: var(--gold); }
-.pricing-value.emerald { color: var(--emerald); }
+/* CARD UPLOADS */
+.card-uploads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.cup-box{background:rgba(255,255,255,.03);border:2px dashed rgba(234,179,8,.22);border-radius:var(--r2);padding:12px 8px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.cup-box.has-img{border-color:var(--gold);background:rgba(234,179,8,.06)}
+.cup-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
+.cup-prev{width:100%;height:80px;object-fit:cover;border-radius:8px;display:none}
+.cup-chk{position:absolute;top:5px;right:5px;background:var(--green);color:#fff;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:.7rem;font-weight:700}
 
-.markup-input-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
-  padding: 16px;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  border: 1px solid var(--gold-border);
-}
-.markup-label { font-size: 13px; color: var(--text-2); font-weight: 600; flex: 1; }
-.markup-input {
-  width: 130px;
-  background: var(--bg-4);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-sm);
-  padding: 8px 14px;
-  color: var(--text-0);
-  font-size: 15px;
-  font-weight: 700;
-  text-align: center;
-  outline: none;
-  transition: var(--transition);
-}
-.markup-input:focus {
-  border-color: var(--gold-border);
-  box-shadow: 0 0 0 3px var(--gold-dim);
-}
-.markup-input::-webkit-outer-spin-button,
-.markup-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-.markup-max-note {
-  font-size: 11px;
-  color: var(--text-3);
-  text-align: center;
-  margin-top: -10px;
-  margin-bottom: 12px;
-}
-.pricing-total-box {
-  padding: 18px;
-  background: var(--gold-dim);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  text-align: center;
-  margin-bottom: 20px;
-}
-.pricing-total-box p { font-size: 12px; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
-.pricing-total-box h2 { font-size: 36px; font-weight: 900; color: var(--gold-light); }
-.pricing-total-box span { font-size: 13px; color: var(--text-2); }
+/* PRICE */
+.pricebox{background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.2);border-radius:var(--r2);padding:12px;margin-bottom:12px}
+.prow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:.83rem}
+.prow:not(:last-child){border-bottom:1px solid rgba(255,255,255,.05)}
+.plbl{color:var(--text2)}.pval{font-weight:700;color:var(--gold)}
+.profit-block{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:var(--r3);padding:11px;text-align:center;margin-top:8px}
+.profit-lbl{font-size:.72rem;color:var(--text2)}.profit-val{font-size:1.5rem;font-weight:900;color:var(--green)}
+input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;outline:none;cursor:pointer;background:linear-gradient(to left,var(--gold) var(--val,0%),rgba(255,255,255,.1) var(--val,0%));margin:9px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:var(--grad);border-radius:50%;box-shadow:0 2px 10px rgba(234,179,8,.5);cursor:pointer}
 
-/* ══════════════════════════════════════════ FORM ELEMENTS ══ */
-.form-group { margin-bottom: 18px; }
-.form-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-1);
-  margin-bottom: 7px;
-}
-.form-label span { color: var(--red); }
-.form-input {
-  width: 100%;
-  background: var(--bg-3);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  color: var(--text-0);
-  font-size: 14px;
-  font-weight: 500;
-  outline: none;
-  transition: var(--transition);
-}
-.form-input:focus {
-  border-color: var(--gold-border);
-  background: var(--bg-4);
-  box-shadow: 0 0 0 3px var(--gold-dim);
-}
-.form-input::placeholder { color: var(--text-3); font-weight: 400; }
-.form-input.error { border-color: rgba(224,92,92,0.5); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media(max-width:480px){ .form-row { grid-template-columns: 1fr; } }
-.form-hint { font-size: 11px; color: var(--text-3); margin-top: 5px; }
-.form-error { font-size: 11px; color: var(--red); margin-top: 5px; display: none; }
-.form-error.show { display: block; }
+/* DROW */
+.drow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:.83rem}
+.drow:not(:last-child){border-bottom:1px solid var(--border)}
+.dlbl{color:var(--text2)}.dval{font-weight:700;color:var(--text)}
+.dval.gold{color:var(--gold)}.dval.green{color:var(--green)}
 
-/* ══════════════════════════════════════════ AGREE SECTION ══ */
-.agree-box {
-  padding: 16px;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.06);
-  margin-bottom: 16px;
-}
-.agree-box p {
-  font-size: 13px;
-  color: var(--text-2);
-  line-height: 1.7;
-}
-.agree-box strong { color: var(--text-0); }
-.agree-box .price-highlight {
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--gold);
-}
+/* TAG */
+.tag{display:inline-flex;align-items:center;padding:3px 9px;border-radius:50px;font-size:.7rem;font-weight:600}
+.tg{background:rgba(234,179,8,.1);color:var(--gold);border:1px solid rgba(234,179,8,.22)}
+.tgg{background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.22)}
 
-.agree-check-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: var(--transition);
-}
-.agree-check-row:hover { border-color: var(--gold-border); }
-.agree-check-row input[type="checkbox"] { display: none; }
-.agree-checkbox {
-  width: 20px; height: 20px;
-  border-radius: 6px;
-  border: 2px solid var(--text-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: var(--transition);
-  font-size: 11px;
-  color: transparent;
-}
-.agree-check-row.checked .agree-checkbox {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--bg-0);
-}
-.agree-check-row span { font-size: 13px; color: var(--text-1); font-weight: 600; }
+/* BTN */
+.btn{display:block;width:100%;padding:13px 16px;border-radius:var(--r2);font-family:inherit;font-size:.92rem;font-weight:700;cursor:pointer;border:none;text-align:center;transition:all .22s}
+.btn-gold{background:var(--grad);color:#000;box-shadow:0 4px 18px rgba(234,179,8,.28)}
+.btn-gold:active{opacity:.85;transform:scale(.98)}
+.btn-outline{background:transparent;color:var(--text2);border:1px solid var(--border);margin-top:8px}
+.btn-outline:active{border-color:rgba(234,179,8,.35);color:var(--gold)}
 
-/* ══════════════════════════════════════════ MODAL BUTTONS ══ */
-.btn-modal-cancel {
-  padding: 11px 24px;
-  background: var(--bg-4);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 40px;
-  color: var(--text-2);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-.btn-modal-cancel:hover { color: var(--text-0); }
-.btn-modal-primary {
-  padding: 11px 28px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  border: none;
-  border-radius: 40px;
-  color: var(--bg-0);
-  font-size: 14px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 16px rgba(201,168,76,0.3);
-}
-.btn-modal-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(201,168,76,0.45);
-}
-.btn-modal-primary:disabled {
-  background: var(--bg-4);
-  color: var(--text-3);
-  box-shadow: none;
-  cursor: not-allowed;
-  transform: none;
-}
+/* PD IMG */
+.pd-img{width:100%;height:170px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,#131928,#0d1117);border:1px solid var(--border);margin-bottom:12px;overflow:hidden}
+.pd-img img{width:100%;height:100%;object-fit:cover}
 
-/* ══════════════════════════════════════════ AUTH PAGE ══ */
-.auth-wrap {
-  min-height: calc(100vh - 68px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  position: relative;
-  z-index: 1;
-}
-.auth-card {
-  background: var(--bg-2);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--radius-xl);
-  width: 100%;
-  max-width: 500px;
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-}
-.auth-card-header {
-  padding: 36px 36px 28px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  background: linear-gradient(180deg, rgba(201,168,76,0.04), transparent);
-}
-.auth-card-icon {
-  width: 64px; height: 64px;
-  background: linear-gradient(135deg, var(--gold-dim), rgba(201,168,76,0.08));
-  border: 1px solid var(--gold-border);
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 18px;
-  font-size: 28px;
-  color: var(--gold);
-}
-.auth-card-header h2 { font-size: 24px; font-weight: 900; color: var(--text-0); margin-bottom: 6px; }
-.auth-card-header p { font-size: 14px; color: var(--text-3); }
-.auth-tabs {
-  display: flex;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.auth-tab {
-  flex: 1;
-  padding: 16px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-3);
-  cursor: pointer;
-  transition: var(--transition);
-  border-bottom: 2px solid transparent;
-}
-.auth-tab.active {
-  color: var(--gold);
-  border-bottom-color: var(--gold);
-  background: var(--gold-dim);
-}
-.auth-form-wrap { padding: 28px 32px 32px; }
-.auth-error {
-  padding: 12px 16px;
-  background: var(--red-dim);
-  border: 1px solid rgba(224,92,92,0.2);
-  border-radius: var(--radius);
-  font-size: 13px;
-  color: var(--red);
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  display: none;
-}
-.auth-error.show { display: flex; }
-.auth-submit {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--bg-0);
-  font-weight: 900;
-  font-size: 15px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 6px 24px rgba(201,168,76,0.3);
-  margin-top: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-}
-.auth-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(201,168,76,0.45);
-}
-.auth-switch-text {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 13px;
-  color: var(--text-3);
-}
-.auth-switch-text a { color: var(--gold); cursor: pointer; font-weight: 700; }
-.auth-switch-text a:hover { text-decoration: underline; }
+/* IMAGE GALLERY STRIP */
+.img-strip{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding:2px;scrollbar-width:none}
+.img-strip::-webkit-scrollbar{display:none}
+.img-thumb{width:56px;height:56px;border-radius:9px;overflow:hidden;border:2px solid transparent;cursor:pointer;flex-shrink:0;background:rgba(255,255,255,.05)}
+.img-thumb.active{border-color:var(--gold)}
+.img-thumb img{width:100%;height:100%;object-fit:cover}
 
-/* ══════════════════════════════════════════ PROFILE PAGE ══ */
-.profile-wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 30px;
-  position: relative;
-  z-index: 1;
-}
-.profile-header-card {
-  background: var(--bg-2);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius-xl);
-  padding: 30px;
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin-bottom: 22px;
-  position: relative;
-  overflow: hidden;
-}
-.profile-header-card::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 200px; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.04));
-}
-.profile-big-avatar {
-  width: 72px; height: 72px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--bg-0);
-  flex-shrink: 0;
-  box-shadow: 0 0 24px rgba(201,168,76,0.4);
-}
-.profile-info h2 { font-size: 22px; font-weight: 900; color: var(--text-0); margin-bottom: 4px; }
-.profile-info p { font-size: 13px; color: var(--text-3); margin-bottom: 10px; }
-.profile-status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-}
-.status-pending { background: rgba(224,92,92,0.12); color: var(--red); border: 1px solid rgba(224,92,92,0.2); }
-.status-approved { background: var(--emerald-dim); color: var(--emerald); border: 1px solid rgba(46,204,138,0.2); }
-.profile-pending-notice {
-  padding: 20px;
-  background: rgba(224,92,92,0.06);
-  border: 1px solid rgba(224,92,92,0.15);
-  border-radius: var(--radius-lg);
-  margin-bottom: 22px;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-.profile-pending-icon {
-  width: 42px; height: 42px;
-  background: var(--red-dim);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--red);
-  font-size: 18px;
-  flex-shrink: 0;
-}
-.profile-pending-notice h4 { font-size: 15px; font-weight: 800; color: var(--text-0); margin-bottom: 6px; }
-.profile-pending-notice p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-.profile-info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-@media(max-width:560px){ .profile-info-grid { grid-template-columns: 1fr; } }
-.profile-info-item {
-  background: var(--bg-2);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: var(--radius);
-  padding: 16px;
-}
-.profile-info-item label { font-size: 11px; color: var(--text-3); font-weight: 700; display: block; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
-.profile-info-item span { font-size: 14px; color: var(--text-0); font-weight: 600; }
+/* AUTH */
+.auth-wrap{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px 80px;position:relative;z-index:1}
+.auth-card{background:var(--card);border:1px solid rgba(234,179,8,.13);border-radius:22px;padding:24px 18px;width:100%;max-width:420px;box-shadow:0 0 50px rgba(234,179,8,.07),0 30px 70px rgba(0,0,0,.4);position:relative;overflow:hidden}
+.auth-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+.auth-icon{width:52px;height:52px;background:var(--grad);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 11px;box-shadow:0 8px 26px rgba(234,179,8,.3)}
+.auth-title{font-size:1.35rem;font-weight:800;text-align:center}
+.auth-sub{color:var(--text2);font-size:.83rem;margin-top:4px;line-height:1.6;text-align:center}
+.divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--text3);font-size:.78rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.terms{font-size:.73rem;color:var(--text3);text-align:center;line-height:1.7;margin-top:10px}
+.terms a{color:var(--gold)}
 
-/* ══════════════════════════════════════════ SUCCESS STATE ══ */
-.success-body {
-  text-align: center;
-  padding: 40px 20px;
-}
-.success-icon {
-  width: 80px; height: 80px;
-  background: var(--emerald-dim);
-  border: 2px solid rgba(46,204,138,0.3);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  font-size: 36px;
-  color: var(--emerald);
-  animation: successPop 0.5s cubic-bezier(.17,.67,.41,1.4);
-}
-@keyframes successPop {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-.success-body h3 { font-size: 22px; font-weight: 900; color: var(--text-0); margin-bottom: 10px; }
-.success-body p { font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 24px; }
-.order-code {
-  display: inline-block;
-  padding: 10px 24px;
-  background: var(--gold-dim);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 2px;
-  margin-bottom: 24px;
-}
+/* PENDING */
+.pend-icon{width:76px;height:76px;background:rgba(245,158,11,.1);border:2px solid rgba(234,179,8,.28);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;animation:pp 2.2s infinite}
+@keyframes pp{0%,100%{box-shadow:0 0 0 0 rgba(234,179,8,.28)}50%{box-shadow:0 0 0 14px rgba(234,179,8,0)}}
 
-/* ══════════════════════════════════════════ TOAST ══ */
-.toast-wrap {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.toast {
-  padding: 14px 20px;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-0);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  animation: toastIn .3s ease;
-  border: 1px solid rgba(255,255,255,0.07);
-  min-width: 240px;
-}
-.toast.t-success { border-right: 3px solid var(--emerald); }
-.toast.t-error   { border-right: 3px solid var(--red); }
-.toast.t-info    { border-right: 3px solid var(--gold); }
-@keyframes toastIn {
-  from { opacity:0; transform:translateX(-20px); }
-  to   { opacity:1; transform:translateX(0); }
-}
+/* SUCCESS */
+.check{width:68px;height:68px;background:rgba(16,185,129,.1);border:2px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 14px;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* ══════════════════════════════════════════ EMPTY / LOADING ══ */
-.empty-state {
-  grid-column: 1/-1;
-  text-align: center;
-  padding: 80px 20px;
-}
-.empty-state i { font-size: 56px; color: var(--text-3); margin-bottom: 16px; display: block; }
-.empty-state h3 { font-size: 20px; font-weight: 700; color: var(--text-2); margin-bottom: 8px; }
-.empty-state p { font-size: 14px; color: var(--text-3); }
-.spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--bg-4);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-  margin: 60px auto;
-}
-@keyframes spin { to { transform:rotate(360deg); } }
+/* NOTIF */
+.notif-bar{position:fixed;top:calc(var(--nav-h)+8px);right:12px;left:12px;background:var(--card);border:1px solid var(--border);border-top:3px solid var(--green);border-radius:var(--r3);padding:11px 14px;font-size:.83rem;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.4);animation:slideDown .3s ease;display:none}
+@keyframes slideDown{from{transform:translateY(-18px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-/* ══════════════════════════════════════════ FOOTER ══ */
-.footer {
-  border-top: 1px solid rgba(255,255,255,0.05);
-  padding: 50px 40px 30px;
-  position: relative;
-  z-index: 1;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 40px;
-}
-@media(max-width:768px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
-@media(max-width:480px){ .footer-grid { grid-template-columns: 1fr; } }
-.footer-brand p { font-size: 13px; color: var(--text-3); line-height: 1.7; margin-top: 10px; max-width: 280px; }
-.footer-col h4 { font-size: 14px; font-weight: 800; color: var(--text-0); margin-bottom: 16px; }
-.footer-col a { display: block; font-size: 13px; color: var(--text-3); margin-bottom: 10px; cursor: pointer; transition: var(--transition); }
-.footer-col a:hover { color: var(--gold); }
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.04);
-  padding-top: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.footer-bottom p { font-size: 12px; color: var(--text-3); }
-.footer-bottom span { color: var(--gold); }
-
-/* ══════════════════════════════════════════ RESPONSIVE NAV ══ */
-@media(max-width:640px) {
-  .navbar { padding: 0 16px; gap: 10px; }
-  .nav-logo-text { display: none; }
-  .nav-links .nav-btn span { display: none; }
-  .hero { padding: 50px 20px 40px; }
-  .products-grid { padding: 0 16px 30px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .section-head { padding: 10px 16px 16px; }
-  .categories-strip { padding: 0 16px 20px; }
-}
-
-/* ══════════════════════════════════════════ MISC ══ */
-.divider {
-  height: 1px;
-  background: rgba(255,255,255,0.05);
-  margin: 20px 0;
-}
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-}
-.tag-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
-.tag-emerald { background: var(--emerald-dim); color: var(--emerald); }
-.tag-red { background: var(--red-dim); color: var(--red); }
-.tag-blue { background: var(--blue-dim); color: var(--blue); }
-
-.no-user-notice {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding: 14px 18px;
-  background: var(--blue-dim);
-  border: 1px solid rgba(91,156,246,0.2);
-  border-radius: var(--radius);
-  margin-top: 14px;
-}
-.no-user-notice i { color: var(--blue); font-size: 18px; }
-.no-user-notice p { font-size: 13px; color: var(--text-2); }
-.no-user-notice a { color: var(--gold); cursor: pointer; font-weight: 700; }
+/* INBOX */
+.msg-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:13px 15px;margin-bottom:9px;cursor:pointer;transition:all .2s;position:relative}
+.msg-item.unread{border-color:rgba(234,179,8,.3);background:rgba(234,179,8,.03)}
+.msg-item.unread::after{content:'';position:absolute;top:14px;left:14px;width:7px;height:7px;background:var(--gold);border-radius:50%}
+.msg-sender{font-size:.75rem;font-weight:700;color:var(--gold);margin-bottom:4px}
+.msg-subj{font-size:.88rem;font-weight:700;margin-bottom:3px}
+.msg-prev{font-size:.78rem;color:var(--text2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.55}
+.msg-time{font-size:.68rem;color:var(--text3);margin-top:5px}
 </style>
 </head>
 <body>
-<div class="geo-pattern"></div>
 
-<!-- ══════════════ NAVBAR ══════════════ -->
-<nav class="navbar">
-  <div class="nav-logo" onclick="showPage('home')">
-    <div class="nav-logo-icon">ب</div>
-    <div class="nav-logo-text">کوردی<span>بازاڕ</span></div>
-  </div>
-  <div class="nav-search">
-    <input type="text" id="searchQ" placeholder="گەڕان لە بەرهەمەکان..." />
-    <button class="nav-search-btn" onclick="doSearch()"><i class="fas fa-search"></i></button>
-  </div>
-  <div class="nav-links" id="navLinks">
-    <!-- injected by JS -->
-  </div>
-</nav>
+<div class="notif-bar" id="notif-bar"></div>
 
-<!-- ══════════════ TOAST ══════════════ -->
-<div class="toast-wrap" id="toastWrap"></div>
-
-<!-- ══════════════ PAGE: HOME ══════════════ -->
+<!-- ═══ HOME GUEST ═══ -->
 <div class="page active" id="page-home">
+  <nav class="topnav">
+    <div class="logo" onclick="goHome()"><div class="logo-icon">🛍️</div><div class="logo-text">بازاڕی کوردستان</div></div>
+    <div class="tnav-right">
+      <button class="tnav-btn tnav-ghost" onclick="showPage('page-login')">چوونەژوورەوە</button>
+      <button class="tnav-btn tnav-gold" onclick="showPage('page-register')">تۆمار</button>
+    </div>
+  </nav>
   <div class="hero">
-    <div class="hero-badge"><i class="fas fa-star"></i> پلاتفۆرمی بازاڕی کوردستان</div>
-    <h1>کاڵاکانت بفرۆشە لە<br/><span class="highlight">کوردی بازاڕ</span></h1>
-    <p>گەیاندنی بەرهەمەکانی کوردستان بۆ هەموو لایەک — سادە، باوەڕپێکراو، و سریع</p>
-    <div class="hero-ctas">
-      <button class="btn-primary" onclick="showPage('auth')">
-        <i class="fas fa-store"></i> <span>دەست بکە بە فرۆشتن</span>
-      </button>
-      <button class="btn-secondary" onclick="document.getElementById('products-anchor').scrollIntoView({behavior:'smooth'})">
-        <i class="fas fa-eye"></i> <span>بینینی بازاڕەکە</span>
-      </button>
-    </div>
+    <div class="hero-badge">✨ پلاتفۆرمی فرۆشتن لە کوردستان</div>
+    <h1 class="hero-title">بازاڕەکەت<br>لێرەیە بەردەستە</h1>
+    <p class="hero-sub">کاڵاکانی کوردستان بفرۆشە و قازانجی خۆت دیاری بکە</p>
     <div class="hero-stats">
-      <div class="hero-stat"><h3 id="hs-products">0</h3><p>بەرهەمی تۆمارکراو</p></div>
-      <div class="hero-stat"><h3 id="hs-sellers">0</h3><p>فرۆشیاری چالاک</p></div>
-      <div class="hero-stat"><h3 id="hs-orders">0</h3><p>فرۆشتنی سەرکەوتوو</p></div>
+      <div class="stat"><span class="stat-n" id="h-prods">٠</span><div class="stat-l">کاڵا</div></div>
+      <div class="stat"><span class="stat-n" id="h-sellers">٠</span><div class="stat-l">فرۆشیار</div></div>
+      <div class="stat"><span class="stat-n">+٦</span><div class="stat-l">جۆر</div></div>
     </div>
   </div>
-
-  <div class="categories-strip" id="catsStrip"></div>
-
-  <div id="products-anchor">
-    <div class="section-head">
-      <h2>بەرهەمەکان</h2>
-      <span class="section-count" id="prodCount"></span>
-    </div>
-    <div class="products-grid" id="productsGrid">
-      <div style="grid-column:1/-1" class="text-center"><div class="spinner"></div></div>
-    </div>
+  <div class="searchbox"><div class="search-wrap"><span class="search-ic">🔍</span><input class="search-inp" type="text" placeholder="گەڕان بۆ کاڵا..." id="si1" oninput="fp1()"></div></div>
+  <div class="cats" id="cats1">
+    <button class="cat active" onclick="fc1('هەمووی',this)">هەمووی</button>
+    <button class="cat" onclick="fc1('ئەلیکترۆنیات',this)">ئەلیکترۆنیات</button>
+    <button class="cat" onclick="fc1('جل و بەرگ',this)">جل و بەرگ</button>
+    <button class="cat" onclick="fc1('بازنامەی ماڵ',this)">بازنامەی ماڵ</button>
+    <button class="cat" onclick="fc1('خواردن',this)">خواردن</button>
+    <button class="cat" onclick="fc1('تەندروستی',this)">تەندروستی</button>
+    <button class="cat" onclick="fc1('وەرزش',this)">وەرزش</button>
   </div>
+  <h2 class="sec-title">کاڵاکانی بەردەست</h2>
+  <div class="pgrid" id="grid1"></div>
+  <div style="height:20px"></div>
+  <nav class="bottom-nav">
+    <div class="bnav-item active"><div class="bnav-icon">🏠</div><div class="bnav-lbl">ماڵپەڕ</div></div>
+    <div class="bnav-item" onclick="showPage('page-login')"><div class="bnav-icon">📦</div><div class="bnav-lbl">کاڵاکان</div></div>
+    <div class="bnav-item" onclick="showPage('page-register')"><div class="bnav-icon">👤</div><div class="bnav-lbl">حساب</div></div>
+  </nav>
 </div>
 
-<!-- ══════════════ PAGE: PRODUCT DETAIL ══════════════ -->
-<div class="page" id="page-detail">
-  <div class="detail-back">
-    <button class="back-btn" onclick="showPage('home')">
-      <i class="fas fa-arrow-right"></i> گەڕانەوە
-    </button>
-  </div>
-  <div class="detail-wrap" id="detailWrap"></div>
-</div>
-
-<!-- ══════════════ PAGE: AUTH ══════════════ -->
-<div class="page" id="page-auth">
+<!-- ═══ LOGIN ═══ -->
+<div class="page" id="page-login">
+  <nav class="topnav">
+    <div class="logo" onclick="goHome()"><div class="logo-icon">🛍️</div><div class="logo-text">بازاڕی کوردستان</div></div>
+    <button class="tnav-btn tnav-ghost" onclick="goHome()">← گەڕانەوە</button>
+  </nav>
   <div class="auth-wrap">
     <div class="auth-card">
-      <div class="auth-card-header">
-        <div class="auth-card-icon"><i class="fas fa-user-tie"></i></div>
-        <h2>بەشداریکردن لە کوردی بازاڕ</h2>
-        <p>هەژمارت دروست بکە و دەست بکە بە فرۆشتن</p>
-      </div>
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">
-          <i class="fas fa-sign-in-alt"></i> چوونەژوورەوە
-        </div>
-        <div class="auth-tab" id="tab-register" onclick="switchTab('register')">
-          <i class="fas fa-user-plus"></i> تۆمارکردن
-        </div>
-      </div>
+      <div class="auth-icon">🔑</div>
+      <h2 class="auth-title">چوونەژوورەوە</h2>
+      <p class="auth-sub" style="margin-bottom:18px">بچۆرەوە بۆ حسابی فرۆشیاریت</p>
+      <div class="fgroup"><label class="flabel">ئیمەیڵ</label><input class="finput" type="email" placeholder="ئیمەیڵەکەت بنووسە" id="li-e"></div>
+      <div class="fgroup"><label class="flabel">وشەی تێپەڕین</label><input class="finput" type="password" placeholder="••••••••" id="li-p"></div>
+      <button class="btn btn-gold" style="margin-top:6px" onclick="doLogin()">چوونەژوورەوە</button>
+      <div class="divider">حسابت نییە?</div>
+      <button class="btn btn-outline" onclick="showPage('page-register')">دروستکردنی حساب تازە</button>
+    </div>
+  </div>
+</div>
 
-      <!-- LOGIN -->
-      <div id="form-login" class="auth-form-wrap">
-        <div class="auth-error" id="loginErr"><i class="fas fa-exclamation-circle"></i><span id="loginErrMsg"></span></div>
-        <div class="form-group">
-          <label class="form-label">ئیمەیڵ <span>*</span></label>
-          <input class="form-input" id="l_email" type="email" placeholder="ئیمەیڵەکەت بنووسە"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">پاسۆرد <span>*</span></label>
-          <input class="form-input" id="l_pass" type="password" placeholder="پاسۆردەکەت بنووسە"/>
-        </div>
-        <button class="auth-submit" onclick="doLogin()">
-          <i class="fas fa-sign-in-alt"></i> چوونەژوورەوە
-        </button>
-        <div class="auth-switch-text">
-          هەژمارت نییە؟ <a onclick="switchTab('register')">تۆمارکردن</a>
-        </div>
+<!-- ═══ REGISTER ═══ -->
+<div class="page" id="page-register">
+  <nav class="topnav">
+    <div class="logo" onclick="goHome()"><div class="logo-icon">🛍️</div><div class="logo-text">بازاڕی کوردستان</div></div>
+    <button class="tnav-btn tnav-ghost" onclick="goHome()">← گەڕانەوە</button>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-icon">✍️</div>
+      <h2 class="auth-title">دروستکردنی حساب</h2>
+      <p class="auth-sub" style="margin-bottom:18px">وەک فرۆشیار تۆمار بکە</p>
+      <div class="fgroup"><label class="flabel">ناوی تەواو</label><input class="finput" type="text" placeholder="ناو و باپیرت" id="rg-n"></div>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">ئیمەیڵ</label><input class="finput" type="email" placeholder="ئیمەیڵ" id="rg-e"></div>
+        <div class="fgroup"><label class="flabel">مۆبایل</label><input class="finput" type="tel" placeholder="07XX XXXXXXX" id="rg-ph"></div>
       </div>
-
-      <!-- REGISTER -->
-      <div id="form-register" class="auth-form-wrap" style="display:none">
-        <div class="auth-error" id="regErr"><i class="fas fa-exclamation-circle"></i><span id="regErrMsg"></span></div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">ناوی تەواو <span>*</span></label>
-            <input class="form-input" id="r_name" type="text" placeholder="ناو و بوکەت"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">ژمارەی مۆبایل <span>*</span></label>
-            <input class="form-input" id="r_phone" type="tel" placeholder="07XX XXX XXXX"/>
-          </div>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">وشەی تێپەڕین</label><input class="finput" type="password" placeholder="••••••••" id="rg-pw"></div>
+        <div class="fgroup"><label class="flabel">دووبارە</label><input class="finput" type="password" placeholder="••••••••" id="rg-pw2"></div>
+      </div>
+      <label class="flabel" style="margin-bottom:9px">🪪 وێنەی کارتی ناسینەوە</label>
+      <div class="card-uploads">
+        <div class="cup-box" id="box-f" onclick="document.getElementById('inp-f').click()">
+          <input type="file" id="inp-f" accept="image/*" capture="environment" onchange="prevCard('f',this)">
+          <img class="cup-prev" id="prev-f" alt=""><div class="cup-chk" id="chk-f">✓</div>
+          <div id="cc-f"><div style="font-size:1.8rem">🪪</div><div style="font-size:.75rem;font-weight:700;margin-top:5px">پێشەوەی کارت</div><div style="font-size:.65rem;color:var(--text3);margin-top:3px">کلیک بکە</div></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">ئیمەیڵ <span>*</span></label>
-          <input class="form-input" id="r_email" type="email" placeholder="ئیمەیڵی کارەکەت"/>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">ژمارەی ناسنامەی کارت <span>*</span></label>
-            <input class="form-input" id="r_idcard" type="text" placeholder="مەسەلەن: 123456"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">پاسۆرد <span>*</span></label>
-            <input class="form-input" id="r_pass" type="password" placeholder="لانیکەم ٦ پیت"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">ناوی بزنس / دوکان</label>
-          <input class="form-input" id="r_biz" type="text" placeholder="ناوی دوکانەکەت (ئیختیاری)"/>
-        </div>
-        <div class="divider"></div>
-        <p style="font-size:12px;color:var(--text-3);margin-bottom:16px;line-height:1.7;">
-          <i class="fas fa-info-circle" style="color:var(--gold)"></i>
-          دوای تۆمارکردن، هەژمارەکەت دەچێت بۆ دۆخی <strong style="color:var(--text-1)">چاوەڕوان</strong> تا ئەدمین پشتراستی بکات. ئەمە مەودای کەمترین کاتی پێویستە.
-        </p>
-        <button class="auth-submit" onclick="doRegister()">
-          <i class="fas fa-user-plus"></i> تۆمارکردن
-        </button>
-        <div class="auth-switch-text">
-          هەژمارت هەیە؟ <a onclick="switchTab('login')">چوونەژوورەوە</a>
+        <div class="cup-box" id="box-b" onclick="document.getElementById('inp-b').click()">
+          <input type="file" id="inp-b" accept="image/*" capture="environment" onchange="prevCard('b',this)">
+          <img class="cup-prev" id="prev-b" alt=""><div class="cup-chk" id="chk-b">✓</div>
+          <div id="cc-b"><div style="font-size:1.8rem">🪪</div><div style="font-size:.75rem;font-weight:700;margin-top:5px">دواوەی کارت</div><div style="font-size:.65rem;color:var(--text3);margin-top:3px">کلیک بکە</div></div>
         </div>
       </div>
+      <button class="btn btn-gold" onclick="doRegister()">تۆمارکردن و چاوەڕوانی پەسەندکردن</button>
+      <p class="terms">بە تۆمارکردن لەگەڵ <a href="#">ڕووکارەکانی بەکارهێنان</a> موافەقی</p>
+      <div class="divider">پێشتر تۆمار کردووی؟</div>
+      <button class="btn btn-outline" onclick="showPage('page-login')">چوونەژوورەوە</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════ PAGE: PROFILE ══════════════ -->
-<div class="page" id="page-profile">
-  <div class="profile-wrap" id="profileWrap"></div>
-</div>
-
-<!-- ══════════════ PAGE: SEARCH ══════════════ -->
-<div class="page" id="page-search">
-  <div class="section-head" style="padding-top:25px">
-    <h2>ئەنجامی گەڕان</h2>
-    <button class="back-btn" onclick="showPage('home')"><i class="fas fa-arrow-right"></i> گەڕانەوە</button>
-  </div>
-  <p id="searchLabel" style="padding:0 30px 16px;font-size:13px;color:var(--text-3)"></p>
-  <div class="products-grid" id="searchGrid" style="padding:0 30px 40px"></div>
-</div>
-
-<!-- ══════════════ MODAL: PRICING ══════════════ -->
-<div class="modal-overlay" id="modalPricing">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3><i class="fas fa-tags"></i> نرخدانان</h3>
-      <p>نرخی فرۆشتنی بەرهەم دیاربکە</p>
-      <button class="modal-close" onclick="closeModal('modalPricing')"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="modal-body" id="pricingBody"></div>
-    <div class="modal-footer">
-      <button class="btn-modal-cancel" onclick="closeModal('modalPricing')">پاشگەزبوونەوە</button>
-      <button class="btn-modal-primary" id="pricingAgreeBtn" onclick="goToShipping()" disabled>
-        <i class="fas fa-check"></i> ڕازیم — بەردەوامبوون
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════ MODAL: SHIPPING ══════════════ -->
-<div class="modal-overlay" id="modalShipping">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3><i class="fas fa-box"></i> ناردنی بەرهەم</h3>
-      <p>زانیاری کڕیار داخل بکە</p>
-      <button class="modal-close" onclick="closeModal('modalShipping')"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="modal-body" id="shippingBody"></div>
-    <div class="modal-footer">
-      <button class="btn-modal-cancel" onclick="closeModal('modalShipping')">پاشگەزبوونەوە</button>
-      <button class="btn-modal-primary" id="shippingAgreeBtn" onclick="confirmOrder()" disabled>
-        <i class="fas fa-check-circle"></i> ڕازیم — ناردن پشتراستکرا
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════ MODAL: SUCCESS ══════════════ -->
-<div class="modal-overlay" id="modalSuccess">
-  <div class="modal-box" style="max-width:440px">
-    <div class="modal-body" id="successBody"></div>
-  </div>
-</div>
-
-<!-- ══════════════ FOOTER ══════════════ -->
-<footer class="footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo">
-        <div class="nav-logo-icon">ب</div>
-        <div class="nav-logo-text">کوردی<span>بازاڕ</span></div>
+<!-- ═══ PENDING ═══ -->
+<div class="page" id="page-pending">
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon">🛍️</div><div class="logo-text">بازاڕی کوردستان</div></div>
+    <button class="tnav-btn tnav-ghost" onclick="doLogout()">دەرچوون</button>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-card" style="text-align:center">
+      <div class="pend-icon">⏳</div>
+      <h2 class="auth-title">چاوەڕوانی پەسەندکردن</h2>
+      <p class="auth-sub" style="margin-top:7px;margin-bottom:16px">حسابەکەت تۆمارکرا! دوای پەسەندکردن دەتوانیت بیفرۆشیت.</p>
+      <div style="background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.18);border-radius:13px;padding:13px;margin-bottom:16px;text-align:right">
+        <div class="drow"><span class="dlbl">دۆخی حساب</span><span class="tag tg">چاوەڕوانی پەسەندکردن</span></div>
+        <div class="drow"><span class="dlbl">بینینی کاڵاکان</span><span class="dval green">✓ بەڵێ</span></div>
+        <div class="drow"><span class="dlbl">فرۆشتن</span><span class="dval" style="color:var(--red)">✗ بۆ ئێستا نەخێر</span></div>
       </div>
-      <p>پلاتفۆرمی بازاڕی دیجیتاڵی کوردستان، گەیاندنی بەرهەم بۆ هەموو ناوچەکان بە شێوەیەکی ئاسان و باوەڕپێکراو</p>
-    </div>
-    <div class="footer-col">
-      <h4>پلاتفۆرم</h4>
-      <a>دەربارەی ئێمە</a>
-      <a>چۆن کاردەکات</a>
-      <a>نرخی خزمەتگوزاری</a>
-      <a>بلۆگ</a>
-    </div>
-    <div class="footer-col">
-      <h4>فرۆشیار</h4>
-      <a>تۆمارکردن</a>
-      <a>باشترین دابینکار</a>
-      <a>زانیاری فرۆشتن</a>
-      <a>ئارمانجەکانمان</a>
-    </div>
-    <div class="footer-col">
-      <h4>پشتیوانی</h4>
-      <a>پرسیارە باوەکان</a>
-      <a>پەیوەندیکردن</a>
-      <a>سیاسەتی تایبەتمەندی</a>
-      <a>مەرج و مەرجەکان</a>
+      <button class="btn btn-gold" onclick="showPage('page-home-in');fp2()">بینینی کاڵاکان</button>
+      <button class="btn btn-outline" onclick="doLogout()">دەرچوون</button>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2025 کوردی بازاڕ — هەموو مافەکان پارێزراوە</p>
-    <p>دروستکرا بە <span>♥</span> بۆ کوردستان</p>
-  </div>
-</footer>
+</div>
 
-<!-- ══════════════════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════════════════ -->
+<!-- ═══ HOME LOGGED IN ═══ -->
+<div class="page" id="page-home-in">
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon">🛍️</div><div class="logo-text">بازاڕی کوردستان</div></div>
+    <div class="tnav-right">
+      <div class="bnav-dot" id="msg-nav-dot" style="position:static;width:8px;height:8px;background:var(--red);border-radius:50%;display:none"></div>
+      <div style="display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:4px 11px 4px 5px;cursor:pointer" onclick="showPage('page-inbox')">
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#000;flex-shrink:0" id="u-av">ف</div>
+        <div style="font-size:.78rem;font-weight:700;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="u-name">فرۆشیار</div>
+      </div>
+    </div>
+  </nav>
+  <div class="hero" style="padding:20px 16px 14px">
+    <div class="hero-badge" id="wb">👋 بەخێربێیت!</div>
+    <h1 class="hero-title" style="font-size:1.5rem">کاڵای خۆت هەڵبژێرە<br>و بیفرۆشە</h1>
+    <p class="hero-sub" style="margin-bottom:0">نرخی خۆت دیاری بکە — قازانجت مال دەبێت</p>
+  </div>
+  <div class="searchbox"><div class="search-wrap"><span class="search-ic">🔍</span><input class="search-inp" type="text" placeholder="گەڕان بۆ کاڵا..." id="si2" oninput="fp2()"></div></div>
+  <div class="cats" id="cats2">
+    <button class="cat active" onclick="fc2('هەمووی',this)">هەمووی</button>
+    <button class="cat" onclick="fc2('ئەلیکترۆنیات',this)">ئەلیکترۆنیات</button>
+    <button class="cat" onclick="fc2('جل و بەرگ',this)">جل و بەرگ</button>
+    <button class="cat" onclick="fc2('بازنامەی ماڵ',this)">بازنامەی ماڵ</button>
+    <button class="cat" onclick="fc2('خواردن',this)">خواردن</button>
+    <button class="cat" onclick="fc2('تەندروستی',this)">تەندروستی</button>
+    <button class="cat" onclick="fc2('وەرزش',this)">وەرزش</button>
+  </div>
+  <h2 class="sec-title">کاڵاکانی بەردەست بۆ فرۆشتن</h2>
+  <div class="pgrid" id="grid2"></div>
+  <div style="height:20px"></div>
+  <nav class="bottom-nav">
+    <div class="bnav-item active" onclick="showPage('page-home-in');fp2()"><div class="bnav-icon">🏠</div><div class="bnav-lbl">ماڵپەڕ</div></div>
+    <div class="bnav-item" onclick="showPage('page-my-sales')">
+      <div class="bnav-dot" id="sales-dot"></div>
+      <div class="bnav-icon">📋</div><div class="bnav-lbl">فرۆشراوەکان</div>
+    </div>
+    <div class="bnav-item" onclick="showPage('page-inbox')">
+      <div class="bnav-dot" id="inbox-dot"></div>
+      <div class="bnav-icon">✉️</div><div class="bnav-lbl">نامەکان</div>
+    </div>
+    <div class="bnav-item" onclick="doLogout()"><div class="bnav-icon">🚪</div><div class="bnav-lbl">دەرچوون</div></div>
+  </nav>
+</div>
+
+<!-- ═══ MY SALES ═══ -->
+<div class="page" id="page-my-sales">
+  <nav class="topnav">
+    <div class="logo" onclick="showPage('page-home-in');fp2()"><div class="logo-icon">🛍️</div><div class="logo-text">بازاڕی کوردستان</div></div>
+    <button class="tnav-btn tnav-ghost" onclick="showPage('page-home-in');fp2()">← گەڕانەوە</button>
+  </nav>
+
+  <!-- Seller Stats -->
+  <div style="padding:18px 16px 0">
+    <h2 class="sec-title" style="margin:0 0 12px">📊 ئامارەکانی تۆ</h2>
+  </div>
+  <div class="seller-stats" id="my-stats"></div>
+
+  <div style="padding:0 16px">
+    <h2 class="sec-title" style="margin:0 0 12px">📋 فرۆشتنەکانی تۆ</h2>
+    <div id="my-sales-list"></div>
+  </div>
+  <div style="height:20px"></div>
+  <nav class="bottom-nav">
+    <div class="bnav-item" onclick="showPage('page-home-in');fp2()"><div class="bnav-icon">🏠</div><div class="bnav-lbl">ماڵپەڕ</div></div>
+    <div class="bnav-item active"><div class="bnav-icon">📋</div><div class="bnav-lbl">فرۆشراوەکان</div></div>
+    <div class="bnav-item" onclick="showPage('page-inbox')"><div class="bnav-dot" id="inbox-dot2"></div><div class="bnav-icon">✉️</div><div class="bnav-lbl">نامەکان</div></div>
+    <div class="bnav-item" onclick="doLogout()"><div class="bnav-icon">🚪</div><div class="bnav-lbl">دەرچوون</div></div>
+  </nav>
+</div>
+
+<!-- ═══ INBOX ═══ -->
+<div class="page" id="page-inbox">
+  <nav class="topnav">
+    <div class="logo" onclick="showPage('page-home-in');fp2()"><div class="logo-icon">🛍️</div><div class="logo-text">بازاڕی کوردستان</div></div>
+    <button class="tnav-btn tnav-ghost" onclick="showPage('page-home-in');fp2()">← گەڕانەوە</button>
+  </nav>
+  <div style="padding:18px 16px 0">
+    <h2 class="sec-title" style="margin:0 0 14px">✉️ نامەکانی ئەدمین</h2>
+    <div id="inbox-list"></div>
+  </div>
+  <nav class="bottom-nav">
+    <div class="bnav-item" onclick="showPage('page-home-in');fp2()"><div class="bnav-icon">🏠</div><div class="bnav-lbl">ماڵپەڕ</div></div>
+    <div class="bnav-item" onclick="showPage('page-my-sales')"><div class="bnav-icon">📋</div><div class="bnav-lbl">فرۆشراوەکان</div></div>
+    <div class="bnav-item active"><div class="bnav-icon">✉️</div><div class="bnav-lbl">نامەکان</div></div>
+    <div class="bnav-item" onclick="doLogout()"><div class="bnav-icon">🚪</div><div class="bnav-lbl">دەرچوون</div></div>
+  </nav>
+</div>
+
+<!-- SHEETS -->
+<!-- Product Guest -->
+<div class="overlay" id="sh-pub">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><div class="sheet-close" onclick="cls('sh-pub')">✕</div><div class="sheet-title">زانیاری کاڵا</div></div>
+    <div class="sheet-body">
+      <div class="pd-img" id="pub-main-img"><span id="pub-em">📦</span></div>
+      <div class="img-strip" id="pub-strip"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="pub-tags"></div>
+      <h2 style="font-size:1.05rem;font-weight:800;margin-bottom:7px" id="pub-name"></h2>
+      <p style="color:var(--text2);font-size:.83rem;line-height:1.75;margin-bottom:12px" id="pub-desc"></p>
+      <div style="background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.18);border-radius:var(--r2);padding:11px;margin-bottom:12px" id="pub-dets"></div>
+      <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:var(--r2);padding:11px;text-align:center;margin-bottom:14px">
+        <div style="font-size:.72rem;color:var(--text2);margin-bottom:3px">نرخی ڕاستەقینە</div>
+        <div style="font-size:1.8rem;font-weight:900;color:var(--gold)" id="pub-price"></div>
+      </div>
+      <button class="btn btn-gold" onclick="cls('sh-pub')">گەڕانەوە</button>
+      <p style="text-align:center;color:var(--text3);font-size:.72rem;margin-top:8px">بۆ فرۆشتن پێویستە تۆمار بکەیت</p>
+    </div>
+  </div>
+</div>
+
+<!-- Product Seller -->
+<div class="overlay" id="sh-sell">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><div class="sheet-close" onclick="cls('sh-sell')">✕</div><div class="sheet-title">زانیاری کاڵا</div></div>
+    <div class="sheet-body">
+      <div class="pd-img" id="sel-main-img"><span id="sel-em">📦</span></div>
+      <div class="img-strip" id="sel-strip"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="sel-tags"></div>
+      <h2 style="font-size:1.05rem;font-weight:800;margin-bottom:7px" id="sel-name"></h2>
+      <p style="color:var(--text2);font-size:.83rem;line-height:1.75;margin-bottom:12px" id="sel-desc"></p>
+      <div style="background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.18);border-radius:var(--r2);padding:11px;margin-bottom:12px" id="sel-dets"></div>
+      <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:var(--r2);padding:11px;text-align:center;margin-bottom:14px">
+        <div style="font-size:.72rem;color:var(--text2);margin-bottom:3px">نرخی ڕاستەقینە</div>
+        <div style="font-size:1.8rem;font-weight:900;color:var(--gold)" id="sel-price"></div>
+      </div>
+      <button class="btn btn-gold" onclick="agreeToSell()">✓ موافەقم — دەمەوێت بیفرۆشم</button>
+      <button class="btn btn-outline" onclick="cls('sh-sell')">گەڕانەوە</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pricing -->
+<div class="overlay" id="sh-price">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div class="sheet-close" onclick="cls('sh-price')">✕</div>
+      <div class="steps"><div class="step done">✓</div><div class="stepline done"></div><div class="step active">٢</div><div class="stepline"></div><div class="step">٣</div></div>
+      <div class="sheet-title">💰 دانانی نرخ</div>
+      <div class="sheet-sub">نرخی فرۆشتنەکەت دیاری بکە</div>
+    </div>
+    <div class="sheet-body">
+      <div class="pricebox">
+        <div class="prow"><span class="plbl">نرخی ڕاستەقینە</span><span class="pval" id="pr-base">٠ دینار</span></div>
+        <div class="prow"><span class="plbl">زیادکردنی نرخ بەربەست</span><span class="pval" id="pr-maxadd">تا ٠</span></div>
+      </div>
+      <div class="fgroup">
+        <label class="flabel">زیادکردنی نرخ (دینار)</label>
+        <input type="range" id="prange" min="0" max="10000" value="0" oninput="calcPrice(this.value)">
+        <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--text3)"><span>٠</span><span id="prange-max">١٠,٠٠٠</span></div>
+      </div>
+      <div class="fgroup"><label class="flabel">یان داخلکردنی دەستی</label><input class="finput" type="number" id="padd" placeholder="بنووسە..." oninput="calcPriceM(this.value)"></div>
+      <div class="pricebox">
+        <div class="prow"><span class="plbl">نرخی فرۆشتن دراو</span><span class="pval" style="font-size:1.05rem" id="pr-sell">٠ دینار</span></div>
+        <div class="profit-block"><div class="profit-lbl">قازانجی تۆ لە هەر فرۆشتنێک</div><div class="profit-val" id="pr-profit">٠ دینار</div></div>
+      </div>
+      <button class="btn btn-gold" onclick="agreePricing()">✓ موافەقم بەم نرخەوە</button>
+      <button class="btn btn-outline" onclick="cls('sh-price')">گەڕانەوە</button>
+    </div>
+  </div>
+</div>
+
+<!-- Shipping -->
+<div class="overlay" id="sh-ship">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div class="sheet-close" onclick="cls('sh-ship')">✕</div>
+      <div class="steps"><div class="step done">✓</div><div class="stepline done"></div><div class="step done">✓</div><div class="stepline done"></div><div class="step active">٣</div></div>
+      <div class="sheet-title">🚚 پەیدابردنی بەرهەم</div>
+      <div class="sheet-sub">زانیاری کڕیار بنووسە</div>
+    </div>
+    <div class="sheet-body">
+      <div style="background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.18);border-radius:var(--r2);padding:11px;text-align:center;margin-bottom:14px">
+        <div style="font-size:.7rem;color:var(--text2)">کۆی نرخ بۆ کڕیار</div>
+        <div style="font-size:1.6rem;font-weight:900;color:var(--gold)" id="ship-total">٠ دینار</div>
+      </div>
+      <h3 style="font-size:.85rem;font-weight:700;color:var(--text2);margin-bottom:10px">📱 زانیاری کڕیار یەکەم</h3>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">ناوی کڕیار</label><input class="finput" type="text" placeholder="ناوی تەواو" id="sh-n1"></div>
+        <div class="fgroup"><label class="flabel">ژمارەی مۆبایل</label><input class="finput" type="tel" placeholder="07XXXXXXXXX" id="sh-p1"></div>
+      </div>
+      <div class="fgroup"><label class="flabel">ناونیشان</label><textarea class="finput" placeholder="شار، شەقام، ژمارەی ماڵ..." id="sh-a1"></textarea></div>
+      <h3 style="font-size:.85rem;font-weight:700;color:var(--text2);margin:12px 0 10px">📱 زانیاری کڕیار دووەم <span style="color:var(--text3);font-weight:400">(ئەگەر هەبوو)</span></h3>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">ناو</label><input class="finput" type="text" placeholder="ناوی تەواو" id="sh-n2"></div>
+        <div class="fgroup"><label class="flabel">مۆبایل</label><input class="finput" type="tel" placeholder="07XXXXXXXXX" id="sh-p2"></div>
+      </div>
+      <div class="fgroup"><label class="flabel">ناونیشان</label><textarea class="finput" placeholder="شار، شەقام..." id="sh-a2"></textarea></div>
+      <button class="btn btn-gold" onclick="agreeShipping()">✓ موافەقم، داواکاری ثبت بکە</button>
+      <button class="btn btn-outline" onclick="cls('sh-ship')">گەڕانەوە</button>
+    </div>
+  </div>
+</div>
+
+<!-- Message detail -->
+<div class="overlay" id="sh-msg">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><div class="sheet-close" onclick="cls('sh-msg')">✕</div><div class="sheet-title">نامەی ئەدمین</div></div>
+    <div class="sheet-body">
+      <div style="background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.2);border-radius:var(--r2);padding:13px;margin-bottom:12px">
+        <div style="font-size:.72rem;color:var(--gold);font-weight:700;margin-bottom:4px">📮 لە: بەڕێوەبەری بازاڕی کوردستان</div>
+        <div style="font-size:.98rem;font-weight:800;margin-bottom:6px" id="msg-subj-v"></div>
+        <div style="font-size:.75rem;color:var(--text3)" id="msg-time-v"></div>
+      </div>
+      <div style="font-size:.88rem;line-height:1.9;color:var(--text2);background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--r2);padding:14px" id="msg-body-v"></div>
+      <button class="btn btn-outline" style="margin-top:14px" onclick="cls('sh-msg')">داخستن</button>
+    </div>
+  </div>
+</div>
+
 <script>
-'use strict';
+const K_S='bk_sellers',K_P='bk_products',K_O='bk_orders',K_M='bk_messages';
+function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+const gS=()=>ld(K_S,[]);
+const gP=()=>ld(K_P,[]);
+const gO=()=>ld(K_O,[]);
+const gM=()=>ld(K_M,[]);
 
-/* ─── DATA STORE (localStorage) ─── */
-const DB = {
-  get: k => { try { return JSON.parse(localStorage.getItem('kb_'+k)||'null'); } catch(e){ return null; } },
-  set: (k,v) => localStorage.setItem('kb_'+k, JSON.stringify(v)),
-  push: (k,v) => { const a = DB.get(k)||[]; a.push(v); DB.set(k,a); return v; },
-};
+let cUser=null,cProd=null,cAdd=0,cat1='هەمووی',cat2='هەمووی';
+const K_CU='bk_cur_user';
+function saveSession(u){try{localStorage.setItem(K_CU,JSON.stringify(u));}catch(e){}}
+function clearSession(){try{localStorage.removeItem(K_CU);}catch(e){}}
 
-/* ─── INITIAL SEED DATA ─── */
-function seedData(){
-  if(DB.get('seeded')) return;
-  DB.set('products', [
-    { id:'pr1', name:'سێبەیەکی دەستکرد بە جلی کوردی', category:'cilubarg', price:45000, stock:30, emoji:'🧣', sellerId:'s1', sellerName:'دوکانی کوردی', desc:'سێبەی دەستکرد بە رەنگ و دیزاینی کوردی کلاسیک، بەرپای بالا و گەرم', city:'هەولێر', maxMarkup:10000 },
-    { id:'pr2', name:'مەلبەندی کوردی خووڵکرداو', category:'cilubarg', price:35000, stock:15, emoji:'👒', sellerId:'s1', sellerName:'دوکانی کوردی', desc:'مەلبەندی کلاسیکی کوردی بە جلی خووڵکراوی دەستی', city:'هەولێر', maxMarkup:8000 },
-    { id:'pr3', name:'بینینی دانیشتووان iPhone 15', category:'eletron', price:1250000, stock:5, emoji:'📱', sellerId:'s2', sellerName:'تیکنەکنی هاوسان', desc:'ئایفۆنی 15، رەنگی سپی، ١٢٨ جیجا بایت، مۆدێلی ئەمساڵ', city:'سلێمانی', maxMarkup:50000 },
-    { id:'pr4', name:'لاپتۆپ لێنۆڤۆ Core i5', category:'eletron', price:850000, stock:8, emoji:'💻', sellerId:'s2', sellerName:'تیکنەکنی هاوسان', desc:'لاپتۆپی قایم بۆ خوێندن و کار، ١٦ جیجا RAM، SSD ٥١٢', city:'سلێمانی', maxMarkup:30000 },
-    { id:'pr5', name:'عەسەلی کوهستانی خالص', category:'xwarin', price:18000, stock:100, emoji:'🍯', sellerId:'s3', sellerName:'بەرهەمی سروشتی', desc:'عەسەلی سروشتی کوهستانی، بەبێ هیچ پێژینەوە، پاک و باوەڕپێکراو', city:'دهوک', maxMarkup:5000 },
-    { id:'pr6', name:'رووغەنی زەیتونی کوردی', category:'xwarin', price:22000, stock:60, emoji:'🫒', sellerId:'s3', sellerName:'بەرهەمی سروشتی', desc:'رووغەنی زەیتونی خالص لە باخچەکانی دهوک، دابەشکراوی سریع', city:'دهوک', maxMarkup:6000 },
-    { id:'pr7', name:'کتێبی هێماکانی ئادابی کوردی', category:'kteb', price:12000, stock:200, emoji:'📚', sellerId:'s4', sellerName:'کتێبخانەی ڕۆشنبیر', desc:'کتێبێکی گەورە دەربارەی ئادابی کوردی، چاپی نوێ بە کاغەزی باش', city:'کەرکووک', maxMarkup:3000 },
-    { id:'pr8', name:'نۆکیا G21 مۆبایل', category:'eletron', price:280000, stock:20, emoji:'📞', sellerId:'s2', sellerName:'تیکنەکنی هاوسان', desc:'مۆبایلی نۆکیا G21 بە باتری پێگەیشتوو و کامێرای باش', city:'سلێمانی', maxMarkup:15000 },
-    { id:'pr9', name:'توێژی قاوەی کوردی', category:'xwarin', price:8500, stock:500, emoji:'☕', sellerId:'s3', sellerName:'بەرهەمی سروشتی', desc:'قاوەی خۆشبۆی کوردی، کوێنکراوی دەستی بۆ تامی ئاسایی', city:'دهوک', maxMarkup:2000 },
-    { id:'pr10', name:'فریزەری سامسونگ ١٨ فوت', category:'malbast', price:620000, stock:12, emoji:'❄️', sellerId:'s5', sellerName:'ئامێری ماڵ', desc:'فریزەری سامسونگ ئینڤەرتەر، کەم ئەیزد دا، گەرەنتی ١ ساڵ', city:'هەولێر', maxMarkup:25000 },
-    { id:'pr11', name:'سەجادەی دەستکردی هەولێری', category:'malbast', price:95000, stock:25, emoji:'🪷', sellerId:'s1', sellerName:'دوکانی کوردی', desc:'سەجادەی دەستکردی ئەسیل بە شوێنی ئەندازەکانی کوردی', city:'هەولێر', maxMarkup:20000 },
-    { id:'pr12', name:'توپی فوتبۆلی ئەدیداس', category:'warzish', price:55000, stock:40, emoji:'⚽', sellerId:'s6', sellerName:'وەرزشی بزوتن', desc:'توپی فوتبۆلی ئەدیداسی ئەسیل، مەزنی ٥، بۆ زەوی چیمەن و هواسپۆرت', city:'سلێمانی', maxMarkup:12000 },
-  ]);
-  DB.set('sellers', [
-    { id:'s1', name:'کوردی شۆپ', email:'kurdishop@kb.com', phone:'07501234567', idcard:'KU-1234', status:'approved', biz:'دوکانی کوردی' },
-    { id:'s2', name:'هاوسان تیک', email:'hawsantech@kb.com', phone:'07701234567', idcard:'KU-2345', status:'approved', biz:'تیکنەکنی هاوسان' },
-    { id:'s3', name:'بەرهەمی سروشتی', email:'natural@kb.com', phone:'07601234567', idcard:'KU-3456', status:'approved', biz:'بەرهەمی سروشتی' },
-  ]);
-  DB.set('orders', []);
-  DB.set('seeded', true);
-}
-seedData();
+const fp=n=>n.toLocaleString('ar-IQ')+' دینار';
 
-/* ─── STATE ─── */
-let currentUser = DB.get('currentUser');
-let currentProductId = null;
-let pricingData = { finalPrice: 0, markup: 0 };
-let shippingAgreed = false;
-let pricingAgreed = false;
-let selectedCat = 'all';
-
-/* ─── PAGE NAVIGATION ─── */
-function showPage(p) {
-  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
-  document.getElementById('page-'+p).classList.add('active');
-  window.scrollTo({top:0, behavior:'smooth'});
-  if(p==='home') renderHome();
-  if(p==='profile') renderProfile();
+// ── IMAGE GALLERY ──
+function buildImgEl(p){
+  const imgs=p.images?.filter(Boolean)||[];
+  const first=imgs[0]||null;
+  return first;
 }
 
-/* ─── NAVBAR RENDER ─── */
-function renderNav() {
-  const nl = document.getElementById('navLinks');
-  if(!currentUser) {
-    nl.innerHTML = `
-      <button class="nav-btn nav-btn-ghost" onclick="showPage('auth')"><i class="fas fa-sign-in-alt"></i><span>چوونەژوورەوە</span></button>
-      <button class="nav-btn nav-btn-gold" onclick="switchTab('register');showPage('auth')"><i class="fas fa-store"></i><span>دوکانم دەکەم</span></button>`;
-  } else {
-    const isPending = currentUser.status !== 'approved';
-    nl.innerHTML = `
-      <div class="nav-user-info" onclick="showPage('profile')">
-        <div class="nav-user-avatar">${currentUser.name[0]}</div>
-        <span class="nav-user-name">${currentUser.name.split(' ')[0]}</span>
-        ${isPending ? '<span class="pending-badge">چاوەڕوان</span>' : '<span class="tag tag-emerald">چالاک</span>'}
-      </div>
-      <button class="nav-btn nav-btn-ghost" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>`;
-  }
+function setMainImg(el,src,em){
+  if(src){ el.innerHTML=`<img src="${src}" style="width:100%;height:100%;object-fit:cover">`; }
+  else{ el.innerHTML=`<span style="font-size:3.5rem">${em||'📦'}</span>`; }
 }
 
-/* ─── HOME PAGE ─── */
-function renderHome() {
-  const products = DB.get('products') || [];
-  const sellers = DB.get('sellers') || [];
-  const orders = DB.get('orders') || [];
-  document.getElementById('hs-products').textContent = products.length;
-  document.getElementById('hs-sellers').textContent = sellers.length;
-  document.getElementById('hs-orders').textContent = orders.length;
-
-  // categories
-  const cats = [
-    {k:'all',l:'🏠 هەموو'},
-    {k:'cilubarg',l:'👗 جل و بەرگ'},
-    {k:'eletron',l:'📱 ئەلێکترۆنی'},
-    {k:'xwarin',l:'🍎 خواردنی'},
-    {k:'malbast',l:'🏠 ماڵ'},
-    {k:'kteb',l:'📚 کتێب'},
-    {k:'warzish',l:'⚽ وەرزش'},
-  ];
-  document.getElementById('catsStrip').innerHTML = cats.map(c =>
-    `<div class="cat-chip${selectedCat===c.k?' active':''}" onclick="filterCat('${c.k}')">${c.l}</div>`
-  ).join('');
-
-  let list = [...products];
-  if(selectedCat!=='all') list = list.filter(p=>p.category===selectedCat);
-  document.getElementById('prodCount').textContent = list.length + ' بەرهەم';
-
-  if(list.length===0) {
-    document.getElementById('productsGrid').innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><h3>بەرهەمێک نەدۆزرایەوە</h3><p>لەم جۆرەدا هیچ بەرهەمێک نییە</p></div>`;
-    return;
-  }
-  document.getElementById('productsGrid').innerHTML = list.map(p => productCardHTML(p)).join('');
+function buildStrip(containerId,imgs,mainId,em){
+  const strip=document.getElementById(containerId);
+  if(!imgs||imgs.filter(Boolean).length<2){strip.style.display='none';return;}
+  strip.style.display='flex';
+  strip.innerHTML=imgs.filter(Boolean).map((img,i)=>`
+    <div class="img-thumb ${i===0?'active':''}" onclick="switchImg('${mainId}','${containerId}',${i},'${em||'📦'}')" id="th-${containerId}-${i}">
+      <img src="${img}" alt="">
+    </div>`).join('');
 }
 
-function filterCat(cat) {
-  selectedCat = cat;
-  renderHome();
+function switchImg(mainId,stripId,idx,em){
+  const imgs=[...document.getElementById(stripId).querySelectorAll('.img-thumb img')].map(i=>i.src);
+  setMainImg(document.getElementById(mainId),imgs[idx],em);
+  document.querySelectorAll(`#${stripId} .img-thumb`).forEach((t,i)=>t.classList.toggle('active',i===idx));
 }
 
-function productCardHTML(p) {
-  return `<div class="product-card" onclick="showProduct('${p.id}')">
-    <div class="product-card-img">${p.emoji}
-    </div>
-    <div class="product-card-body">
-      <div class="product-card-cat">${catLabel(p.category)}</div>
-      <div class="product-card-name">${p.name}</div>
-      <div class="product-card-seller"><i class="fas fa-store"></i> ${p.sellerName} · ${p.city}</div>
-      <div class="product-card-footer">
-        <div>
-          <div class="product-price">${fmt(p.price)}</div>
-          <div class="product-price-unit">دینار عێراقی</div>
-        </div>
-        <span class="product-stock ${p.stock>20?'stock-ok':p.stock>0?'stock-low':'stock-out'}">
-          ${p.stock>0?p.stock+' موجود':'تەواو بوو'}
-        </span>
-      </div>
-    </div>
-  </div>`;
-}
-
-/* ─── PRODUCT DETAIL ─── */
-function showProduct(id) {
-  const products = DB.get('products') || [];
-  const p = products.find(x=>x.id===id);
-  if(!p) return;
-  currentProductId = id;
-
-  const isPending = currentUser && currentUser.status !== 'approved';
-  const notLogged = !currentUser;
-
-  let buySection = '';
-  if(notLogged) {
-    buySection = `
-      <button class="detail-buy-btn" onclick="showPage('auth')">
-        <i class="fas fa-sign-in-alt"></i> چوونەژوورەوە بۆ کڕین
-      </button>
-      <div class="no-user-notice">
-        <i class="fas fa-info-circle"></i>
-        <p>بۆ ئەوەی بتوانی بکڕی، پێویستە <a onclick="showPage('auth')">هەژمارت دروست بکەی</a> یان <a onclick="switchTab('login');showPage('auth')">بچیتە ژوورەوە</a> پێشەکی.</p>
+// ── GRID ──
+function renderGrid(gid,prods,loggedin,pend){
+  const g=document.getElementById(gid);if(!g)return;
+  if(!prods.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:35px 20px;color:var(--text3)"><div style="font-size:2.5rem;margin-bottom:10px;opacity:.4">📦</div><div style="font-size:.85rem">هیچ کاڵایەک نییە</div></div>';return;}
+  g.innerHTML='';
+  prods.forEach(p=>{
+    const imgs=p.images?.filter(Boolean)||[];
+    const imgHtml=imgs[0]?`<img src="${imgs[0]}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:`<span style="font-size:2.5rem;position:relative;z-index:1">${p.em||'📦'}</span>`;
+    const d=document.createElement('div');d.className='pcard';
+    let btn='';
+    if(pend) btn=`<div class="pcard-wait"><span style="font-size:1.1rem">🔒</span><span>چاوەڕوانی پەسەندکردن</span></div>`;
+    else if(loggedin) btn=`<button class="pcard-btn" onclick="event.stopPropagation();openSell('${p.id}')">فرۆشتن →</button>`;
+    else btn=`<button class="pcard-btn" onclick="event.stopPropagation();openPub('${p.id}')">بینین →</button>`;
+    d.innerHTML=`${p.badge?`<div class="pcard-badge">${p.badge}</div>`:''}
+      <div class="pcard-img" style="position:relative">${imgHtml}</div>
+      <div class="pcard-body">
+        <div class="pcard-cat">${p.cat}</div>
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-price">${fp(p.price)}<br><small>نرخی ڕاستەقینە</small></div>
+        ${btn}
       </div>`;
-  } else if(isPending) {
-    buySection = `
-      <button class="detail-buy-btn" disabled>
-        <i class="fas fa-lock"></i> چاوەڕوانی پشتراستکردن
-      </button>
-      <div class="pending-notice">
-        <i class="fas fa-hourglass-half"></i>
-        <p>هەژمارەکەت هێشتا <strong>پشتراست نەکراوە</strong> لەلایەن ئەدمینەوە. کاتێک وەرگیرا، دەتوانی هەموو کاڵاکان بکڕی. تکایە چاوەڕێ بکە.</p>
-      </div>`;
-  } else {
-    buySection = `
-      <button class="detail-buy-btn" onclick="openPricing('${id}')">
-        <i class="fas fa-shopping-bag"></i> کڕین — نرخ دیاربکە
-      </button>`;
-  }
-
-  document.getElementById('detailWrap').innerHTML = `
-    <div>
-      <div class="detail-img-box">${p.emoji}</div>
-    </div>
-    <div class="detail-right">
-      <div class="detail-cat">${catLabel(p.category)}</div>
-      <div class="detail-name">${p.name}</div>
-      <div class="detail-seller-row">
-        <div class="detail-seller-avatar">${p.sellerName[0]}</div>
-        <div class="detail-seller-info">
-          <p>${p.sellerName}</p>
-          <span><i class="fas fa-map-marker-alt"></i> ${p.city}</span>
-        </div>
-        <span class="tag tag-gold" style="margin-right:auto"><i class="fas fa-check-circle"></i> پشتراستکراو</span>
-      </div>
-      <div class="detail-price-box">
-        <div class="detail-price-label">نرخی بنچینەی بەرهەم</div>
-        <div class="detail-price-big">${fmt(p.price)}</div>
-        <div class="detail-price-sub">دینار عێراقی &nbsp;·&nbsp; تا <strong style="color:var(--gold)">${fmt(p.price+p.maxMarkup)}</strong> دەتوانی بیفرۆشی</div>
-      </div>
-      <div class="detail-desc">${p.desc}</div>
-      <div class="detail-meta">
-        <div class="detail-meta-item">
-          <label>موجود</label>
-          <span class="${p.stock>0?'':'color:var(--red)'}">${p.stock} دانە</span>
-        </div>
-        <div class="detail-meta-item">
-          <label>بەرزترین مارک‌ئەپ</label>
-          <span style="color:var(--emerald)">+${fmt(p.maxMarkup)}</span>
-        </div>
-        <div class="detail-meta-item">
-          <label>جۆر</label>
-          <span>${catLabel(p.category)}</span>
-        </div>
-        <div class="detail-meta-item">
-          <label>شار</label>
-          <span>${p.city}</span>
-        </div>
-      </div>
-      ${buySection}
-    </div>`;
-  showPage('detail');
+    if(!pend) d.onclick=loggedin?()=>openSell(p.id):()=>openPub(p.id);
+    g.appendChild(d);
+  });
 }
 
-/* ─── PRICING MODAL ─── */
-function openPricing(id) {
-  const products = DB.get('products') || [];
-  const p = products.find(x=>x.id===id);
-  if(!p) return;
-  currentProductId = id;
-  pricingAgreed = false;
+function getFiltered(search,cat){return gP().filter(p=>{const ms=!search||p.name.includes(search)||p.cat.includes(search);const mc=cat==='هەمووی'||p.cat===cat;return ms&&mc;});}
+function fp1(){renderGrid('grid1',getFiltered(document.getElementById('si1').value,cat1),false,false);}
+function fp2(){const pend=cUser&&cUser.status==='pending';renderGrid('grid2',getFiltered(document.getElementById('si2').value,cat2),!pend,pend);}
+function fc1(c,el){cat1=c;document.querySelectorAll('#cats1 .cat').forEach(t=>t.classList.remove('active'));el.classList.add('active');fp1();}
+function fc2(c,el){cat2=c;document.querySelectorAll('#cats2 .cat').forEach(t=>t.classList.remove('active'));el.classList.add('active');fp2();}
 
-  const body = document.getElementById('pricingBody');
-  body.innerHTML = `
-    <div class="steps-bar">
-      <div class="step-item active" id="step1"><div class="step-num">1</div><div class="step-label">نرخدانان</div></div>
-      <div class="step-line"></div>
-      <div class="step-item" id="step2"><div class="step-num">2</div><div class="step-label">ناردن</div></div>
-    </div>
-
-    <div class="pricing-product-row">
-      <div class="pricing-product-emoji">${p.emoji}</div>
-      <div class="pricing-product-info">
-        <h4>${p.name}</h4>
-        <p>${p.sellerName} · ${p.city}</p>
-      </div>
-    </div>
-
-    <div style="margin-bottom:16px">
-      <div class="pricing-row">
-        <label><i class="fas fa-tag"></i> نرخی ڕاستەقینەی بەرهەم</label>
-        <span class="pricing-value">${fmt(p.price)}</span>
-      </div>
-      <div class="pricing-row">
-        <label><i class="fas fa-arrow-up"></i> بەرزترین مارک‌ئەپ مەرجکراو</label>
-        <span class="pricing-value emerald">+${fmt(p.maxMarkup)}</span>
-      </div>
-    </div>
-
-    <div class="markup-input-group">
-      <label class="markup-label"><i class="fas fa-sliders-h" style="color:var(--gold)"></i> مارک‌ئەپی خۆت زیاد بکە (د.ع)</label>
-      <input class="markup-input" type="number" id="markupInput" min="0" max="${p.maxMarkup}" value="0" oninput="updatePricing('${id}')"/>
-    </div>
-    <p class="markup-max-note">زیاترین: <strong style="color:var(--gold)">${fmt(p.maxMarkup)}</strong> دینار</p>
-
-    <div class="pricing-total-box" id="pricingTotalBox">
-      <p>نرخی فرۆشتنی کۆتایی</p>
-      <h2 id="finalPriceDisplay">${fmt(p.price)}</h2>
-      <span>قازانجی تۆ: <strong id="profitDisplay">0</strong> دینار</span>
-    </div>
-
-    <div class="agree-box">
-      <p>بە کلیک لەسەر <strong>"ڕازیم"</strong>، ئەوا پشتراست دەکەی کە نرخی <strong><span class="price-highlight" id="agreePriceText">${fmt(p.price)}</span></strong> بۆ ئەم بەرهەمە رەوا و دروستە و ڕازی بە یاسا و مەرجەکانی کوردی بازاڕی.</p>
-    </div>
-    <div class="agree-check-row" id="pricingCheck" onclick="togglePricingAgree()">
-      <input type="checkbox" id="pricingCheckbox"/>
-      <div class="agree-checkbox" id="pricingCheckIcon"><i class="fas fa-check"></i></div>
-      <span>بەڵێ، ڕازیم و مەرجەکان قبوڵ دەکەم</span>
-    </div>`;
-
-  updatePricing(id);
-  document.getElementById('modalPricing').classList.add('open');
+// ── OPEN PRODUCT ──
+function openPub(id){
+  const p=gP().find(x=>x.id===id);if(!p)return;cProd=p;
+  const imgs=p.images?.filter(Boolean)||[];
+  setMainImg(document.getElementById('pub-main-img'),imgs[0]||null,p.em);
+  buildStrip('pub-strip',imgs,'pub-main-img',p.em);
+  document.getElementById('pub-name').textContent=p.name;
+  document.getElementById('pub-desc').textContent=p.desc||'';
+  document.getElementById('pub-price').textContent=fp(p.price);
+  document.getElementById('pub-tags').innerHTML=`<span class="tag tg">${p.cat}</span><span class="tag tgg">موجود</span>`;
+  document.getElementById('pub-dets').innerHTML=`<div class="drow"><span class="dlbl">جۆر</span><span class="dval">${p.cat}</span></div><div class="drow"><span class="dlbl">نرخی ڕاستەقینە</span><span class="dval gold">${fp(p.price)}</span></div><div class="drow"><span class="dlbl">زیادکردن بەربەست</span><span class="dval">تا ${fp(p.max||0)}</span></div>`;
+  open('sh-pub');
 }
 
-function updatePricing(id) {
-  const products = DB.get('products') || [];
-  const p = products.find(x=>x.id===id);
-  if(!p) return;
-  let markup = parseInt(document.getElementById('markupInput').value)||0;
-  if(markup < 0) markup = 0;
-  if(markup > p.maxMarkup) { markup = p.maxMarkup; document.getElementById('markupInput').value = markup; }
-  const finalPrice = p.price + markup;
-  pricingData = { finalPrice, markup, basePrice: p.price };
-  document.getElementById('finalPriceDisplay').textContent = fmt(finalPrice);
-  document.getElementById('profitDisplay').textContent = fmt(markup);
-  document.getElementById('agreePriceText').textContent = fmt(finalPrice);
+function openSell(id){
+  const p=gP().find(x=>x.id===id);if(!p)return;cProd=p;
+  const imgs=p.images?.filter(Boolean)||[];
+  setMainImg(document.getElementById('sel-main-img'),imgs[0]||null,p.em);
+  buildStrip('sel-strip',imgs,'sel-main-img',p.em);
+  document.getElementById('sel-name').textContent=p.name;
+  document.getElementById('sel-desc').textContent=p.desc||'';
+  document.getElementById('sel-price').textContent=fp(p.price);
+  document.getElementById('sel-tags').innerHTML=`<span class="tag tg">${p.cat}</span><span class="tag tgg">موجود</span>`;
+  document.getElementById('sel-dets').innerHTML=`<div class="drow"><span class="dlbl">جۆر</span><span class="dval">${p.cat}</span></div><div class="drow"><span class="dlbl">نرخی ڕاستەقینە</span><span class="dval gold">${fp(p.price)}</span></div><div class="drow"><span class="dlbl">زیادکردن بەربەست</span><span class="dval">تا ${fp(p.max||0)}</span></div>`;
+  open('sh-sell');
 }
 
-function togglePricingAgree() {
-  pricingAgreed = !pricingAgreed;
-  const row = document.getElementById('pricingCheck');
-  row.classList.toggle('checked', pricingAgreed);
-  document.getElementById('pricingAgreeBtn').disabled = !pricingAgreed;
+function agreeToSell(){
+  cls('sh-sell');
+  document.getElementById('pr-base').textContent=fp(cProd.price);
+  document.getElementById('pr-maxadd').textContent='تا '+fp(cProd.max||0);
+  document.getElementById('prange-max').textContent=(cProd.max||0).toLocaleString('ar-IQ');
+  const r=document.getElementById('prange');r.max=cProd.max||10000;r.value=0;
+  document.getElementById('padd').value='';cAdd=0;calcPrice(0);open('sh-price');
 }
 
-/* ─── SHIPPING MODAL ─── */
-function goToShipping() {
-  if(!pricingAgreed) return;
-  closeModal('modalPricing');
-  shippingAgreed = false;
-
-  const products = DB.get('products') || [];
-  const p = products.find(x=>x.id===currentProductId);
-  if(!p) return;
-
-  document.getElementById('shippingBody').innerHTML = `
-    <div class="steps-bar">
-      <div class="step-item done" id="sstep1"><div class="step-num"><i class="fas fa-check"></i></div><div class="step-label">نرخدانان</div><div class="step-line"></div></div>
-      <div class="step-item active" id="sstep2"><div class="step-num">2</div><div class="step-label">ناردن</div></div>
-    </div>
-
-    <div class="pricing-product-row" style="margin-bottom:20px">
-      <div class="pricing-product-emoji">${p.emoji}</div>
-      <div class="pricing-product-info">
-        <h4>${p.name}</h4>
-        <p>نرخی کۆتایی: <strong style="color:var(--gold)">${fmt(pricingData.finalPrice)}</strong> دینار</p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">ناوی کڕیار <span>*</span></label>
-      <input class="form-input" id="sh_name" type="text" placeholder="ناوی تەواوی کڕیار"/>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">ژمارەی مۆبایل ١ <span>*</span></label>
-        <input class="form-input" id="sh_phone1" type="tel" placeholder="07XX XXX XXXX"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">ژمارەی مۆبایل ٢</label>
-        <input class="form-input" id="sh_phone2" type="tel" placeholder="ئیختیاری"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">شار / ناوچە <span>*</span></label>
-      <input class="form-input" id="sh_city" type="text" placeholder="هەولێر، سلێمانی، دهوک..."/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">ناونیشانی تەواو <span>*</span></label>
-      <input class="form-input" id="sh_addr" type="text" placeholder="کوچە / ژمارەی خانوو / نیشانی تر..."/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">تێبینی تر</label>
-      <input class="form-input" id="sh_note" type="text" placeholder="هەر تێبینییەکی تر (ئیختیاری)"/>
-    </div>
-
-    <div class="agree-box">
-      <p>گەیاندن دەبێت بۆ ناونیشانی لاریکراو. تکایە ئەمینت بە <strong>ناو و ناونیشان</strong> راست و تەواوە. کاتی گەیاندن <strong>١ تا ٣ ڕۆژی کارکردن</strong>ە.</p>
-    </div>
-    <div class="agree-check-row" id="shippingCheck" onclick="toggleShippingAgree()">
-      <input type="checkbox"/>
-      <div class="agree-checkbox" id="shippingCheckIcon"><i class="fas fa-check"></i></div>
-      <span>بەڵێ، ئەمینم زانیارییەکان راستن — ڕازیم</span>
-    </div>`;
-
-  document.getElementById('modalShipping').classList.add('open');
+function calcPrice(v){
+  v=Math.min(parseInt(v)||0,cProd.max||0);cAdd=v;
+  document.getElementById('pr-sell').textContent=fp(cProd.price+v);
+  document.getElementById('pr-profit').textContent=fp(v);
+  document.getElementById('prange').value=v;document.getElementById('padd').value=v;
+  document.getElementById('prange').style.cssText=`--val:${(v/(cProd.max||1)*100)}%`;
 }
+function calcPriceM(v){calcPrice(Math.min(parseInt(v)||0,cProd.max||0));}
 
-function toggleShippingAgree() {
-  shippingAgreed = !shippingAgreed;
-  const row = document.getElementById('shippingCheck');
-  row.classList.toggle('checked', shippingAgreed);
-  document.getElementById('shippingAgreeBtn').disabled = !shippingAgreed;
-}
+function agreePricing(){cls('sh-price');document.getElementById('ship-total').textContent=fp(cProd.price+cAdd);open('sh-ship');}
 
-/* ─── CONFIRM ORDER ─── */
-function confirmOrder() {
-  if(!shippingAgreed) return;
-  const name = document.getElementById('sh_name').value.trim();
-  const phone1 = document.getElementById('sh_phone1').value.trim();
-  const city = document.getElementById('sh_city').value.trim();
-  const addr = document.getElementById('sh_addr').value.trim();
-  if(!name||!phone1||!city||!addr) {
-    showToast('تکایە خانە داواکراوەکان پڕبکەوە', 'error'); return;
-  }
-
-  const orderId = 'KB-' + Date.now().toString().slice(-6);
-  const products = DB.get('products') || [];
-  const p = products.find(x=>x.id===currentProductId);
-
-  const order = {
-    id: orderId,
-    productId: currentProductId,
-    productName: p?.name,
-    emoji: p?.emoji,
-    sellerId: currentUser.id,
-    sellerName: currentUser.name,
-    buyerName: name,
-    phone1,
-    phone2: document.getElementById('sh_phone2').value.trim(),
-    city, addr,
-    note: document.getElementById('sh_note').value.trim(),
-    basePrice: pricingData.basePrice,
-    markup: pricingData.markup,
-    finalPrice: pricingData.finalPrice,
-    profit: pricingData.markup,
-    status: 'pending',
-    createdAt: new Date().toISOString(),
+function agreeShipping(){
+  const n1=document.getElementById('sh-n1').value.trim();
+  const p1=document.getElementById('sh-p1').value.trim();
+  const a1=document.getElementById('sh-a1').value.trim();
+  if(!n1||!p1||!a1){notif('⚠️ تکایە زانیاری کڕیار یەکەم پڕ بکەرەوە','w');return;}
+  const n2=document.getElementById('sh-n2').value.trim();
+  const p2=document.getElementById('sh-p2').value.trim();
+  const a2=document.getElementById('sh-a2').value.trim();
+  const orders=gO();
+  const newOrder={
+    id:'#'+String(orders.length+1).padStart(3,'0'),
+    prod:cProd.name,prodId:cProd.id,
+    seller:cUser.name,sellerId:cUser.id,
+    price:cProd.price+cAdd,profit:cAdd,
+    status:'pending',
+    cust1:{name:n1,phone:p1,addr:a1},
+    cust2:n2?{name:n2,phone:p2,addr:a2}:null,
+    date:new Date().toLocaleDateString('ar-IQ'),
+    ts:Date.now()
   };
-
-  // reduce stock
-  const idx = products.findIndex(x=>x.id===currentProductId);
-  if(idx>=0 && products[idx].stock>0) products[idx].stock--;
-  DB.set('products', products);
-  DB.push('orders', order);
-
-  closeModal('modalShipping');
-  showSuccess(order);
+  orders.push(newOrder);sv(K_O,orders);
+  cls('sh-ship');
+  // ← redirect to My Sales
+  showPage('page-my-sales');
+  renderMySales();
+  notif('✓ داواکاری ثبت کرا! چاوەڕی تیمەکەمان بکە','s');
 }
 
-function showSuccess(order) {
-  document.getElementById('successBody').innerHTML = `
-    <div class="success-body">
-      <div class="success-icon"><i class="fas fa-check"></i></div>
-      <h3>داواکاری پشتراستکرا! 🎉</h3>
-      <p>داواکارییەکەت بە سەرکەوتوویی تۆمارکرا. تیمەکەمان پەیوەندیت پێوە دەکات بۆ ئیدارەکردنی گەیاندن.</p>
-      <div class="order-code">${order.id}</div>
-      <p style="font-size:12px;color:var(--text-3)">کۆدی داواکارییەکەت پارێزبکە</p>
-      <button class="btn-primary" style="margin:0 auto" onclick="closeModal('modalSuccess');showPage('home')">
-        <i class="fas fa-home"></i> گەڕانەوە بۆ ماڵپەڕ
-      </button>
-    </div>`;
-  document.getElementById('modalSuccess').classList.add('open');
-  showToast('داواکارییەکەت پشتراستکرا ✅', 'success');
-}
+// ── MY SALES ──
+function renderMySales(){
+  if(!cUser) return;
+  const myOrders=gO().filter(o=>o.sellerId===cUser.id).sort((a,b)=>b.ts-a.ts);
+  // Stats
+  const totalSold=myOrders.filter(o=>o.status==='done').length;
+  const totalProfit=myOrders.reduce((a,o)=>a+(o.profit||0),0);
+  const totalSales=myOrders.length;
+  const waiting=myOrders.filter(o=>o.status==='pending'||o.status==='processing').length;
+  document.getElementById('my-stats').innerHTML=`
+    <div class="sstat"><span class="sstat-n" style="color:var(--gold)">${totalSales}</span><div class="sstat-l">کۆی فرۆشتنەکان</div></div>
+    <div class="sstat"><span class="sstat-n" style="color:var(--green)">${fp(totalProfit)}</span><div class="sstat-l">کۆی قازانج</div></div>
+    <div class="sstat"><span class="sstat-n" style="color:var(--orange)">${waiting}</span><div class="sstat-l">چاوەڕوان</div></div>
+    <div class="sstat"><span class="sstat-n" style="color:var(--green)">${totalSold}</span><div class="sstat-l">تەواوبووەکان</div></div>`;
 
-/* ─── AUTH ─── */
-function switchTab(tab) {
-  document.getElementById('tab-login').classList.toggle('active', tab==='login');
-  document.getElementById('tab-register').classList.toggle('active', tab==='register');
-  document.getElementById('form-login').style.display = tab==='login'?'block':'none';
-  document.getElementById('form-register').style.display = tab==='register'?'block':'none';
-}
-
-function doLogin() {
-  const email = document.getElementById('l_email').value.trim().toLowerCase();
-  const pass = document.getElementById('l_pass').value;
-  const errEl = document.getElementById('loginErr');
-  const msgEl = document.getElementById('loginErrMsg');
-  errEl.classList.remove('show');
-  if(!email||!pass) { msgEl.textContent='تکایە هەموو خانەکان پڕبکەوە'; errEl.classList.add('show'); return; }
-  const sellers = DB.get('sellers')||[];
-  const u = sellers.find(s=>s.email.toLowerCase()===email && s.pass===pass);
-  if(!u) { msgEl.textContent='ئیمەیڵ یان پاسۆرد هەڵەیە'; errEl.classList.add('show'); return; }
-  currentUser = u;
-  DB.set('currentUser', u);
-  renderNav();
-  showToast('بەخێربێیت '+u.name+' 👋', 'success');
-  showPage('home');
-}
-
-function doRegister() {
-  const name = document.getElementById('r_name').value.trim();
-  const phone = document.getElementById('r_phone').value.trim();
-  const email = document.getElementById('r_email').value.trim().toLowerCase();
-  const idcard = document.getElementById('r_idcard').value.trim();
-  const pass = document.getElementById('r_pass').value;
-  const biz = document.getElementById('r_biz').value.trim();
-  const errEl = document.getElementById('regErr');
-  const msgEl = document.getElementById('regErrMsg');
-  errEl.classList.remove('show');
-
-  if(!name||!phone||!email||!idcard||!pass) { msgEl.textContent='تکایە هەموو خانە داواکراوەکان پڕبکەوە'; errEl.classList.add('show'); return; }
-  if(pass.length<6) { msgEl.textContent='پاسۆرد دەبێت لانیکەم ٦ پیت بێت'; errEl.classList.add('show'); return; }
-  const sellers = DB.get('sellers')||[];
-  if(sellers.find(s=>s.email.toLowerCase()===email)) { msgEl.textContent='ئەم ئیمەیڵەیە پێشتر تۆمارکراوە'; errEl.classList.add('show'); return; }
-
-  const newUser = { id:'s'+Date.now(), name, phone, email, idcard, pass, biz, status:'pending', createdAt: new Date().toISOString() };
-  sellers.push(newUser);
-  DB.set('sellers', sellers);
-  currentUser = newUser;
-  DB.set('currentUser', newUser);
-  renderNav();
-  showToast('تۆمارکردن سەرکەوتوو بوو ✅', 'success');
-  showPage('profile');
-}
-
-function doLogout() {
-  currentUser = null;
-  DB.set('currentUser', null);
-  renderNav();
-  showToast('دەرچوویت', 'info');
-  showPage('home');
-}
-
-/* ─── PROFILE ─── */
-function renderProfile() {
-  if(!currentUser) { showPage('auth'); return; }
-  const isPending = currentUser.status !== 'approved';
-  const orders = (DB.get('orders')||[]).filter(o=>o.sellerId===currentUser.id);
-  const totalProfit = orders.reduce((s,o)=>s+(o.profit||0),0);
-
-  let pendingBlock = '';
-  if(isPending) {
-    pendingBlock = `<div class="profile-pending-notice">
-      <div class="profile-pending-icon"><i class="fas fa-hourglass-half"></i></div>
-      <div>
-        <h4>هەژمارەکەت چاوەڕوانی پشتراستکردنە</h4>
-        <p>هەژمارەکەت لەژێر پێداچوونەوەی ئەدمینەدایە. دواتر دەتوانی هەموو کاڵاکان بکڕی و بفرۆشی. ئەم مەودایە ٢٤ تا ٤٨ کاتژمێر دەخایەنێت. زانیارییەکانت پشتراست دەکرێن و پاشان دەستوورت پێدەدرێت.</p>
-      </div>
-    </div>`;
-  }
-
-  document.getElementById('profileWrap').innerHTML = `
-    <div class="profile-header-card">
-      <div class="profile-big-avatar">${currentUser.name[0]}</div>
-      <div class="profile-info">
-        <h2>${currentUser.name}</h2>
-        <p>${currentUser.email} · ${currentUser.phone}</p>
-        <span class="profile-status-badge ${isPending?'status-pending':'status-approved'}">
-          <i class="fas ${isPending?'fa-clock':'fa-check-circle'}"></i>
-          ${isPending?'چاوەڕوانی پشتراستکردن':'پشتراستکراو ✓'}
-        </span>
-      </div>
-    </div>
-
-    ${pendingBlock}
-
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px">
-      <div style="background:var(--bg-2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:20px;text-align:center">
-        <div style="font-size:28px;font-weight:900;color:var(--gold)">${orders.length}</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:4px">داواکاریەکان</div>
-      </div>
-      <div style="background:var(--bg-2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:20px;text-align:center">
-        <div style="font-size:22px;font-weight:900;color:var(--emerald)">${fmt(totalProfit)}</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:4px">کۆی قازانج</div>
-      </div>
-      <div style="background:var(--bg-2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:20px;text-align:center">
-        <div style="font-size:28px;font-weight:900;color:var(--blue)">${currentUser.status==='approved'?'✓':'⏳'}</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:4px">دۆخی هەژمار</div>
-      </div>
-    </div>
-
-    <h3 style="font-size:16px;font-weight:800;color:var(--text-0);margin-bottom:14px;display:flex;align-items:center;gap:8px"><span style="width:3px;height:18px;background:var(--gold);border-radius:2px;display:inline-block"></span> زانیاری هەژمار</h3>
-    <div class="profile-info-grid" style="margin-bottom:24px">
-      <div class="profile-info-item"><label>ناوی تەواو</label><span>${currentUser.name}</span></div>
-      <div class="profile-info-item"><label>ئیمەیڵ</label><span>${currentUser.email}</span></div>
-      <div class="profile-info-item"><label>ژمارەی مۆبایل</label><span>${currentUser.phone}</span></div>
-      <div class="profile-info-item"><label>ناسنامەی کارت</label><span>${currentUser.idcard}</span></div>
-      ${currentUser.biz?`<div class="profile-info-item"><label>ناوی بزنس</label><span>${currentUser.biz}</span></div>`:''}
-      <div class="profile-info-item"><label>دۆخ</label><span style="color:${isPending?'var(--red)':'var(--emerald)'}">${isPending?'چاوەڕوان':'چالاک'}</span></div>
-    </div>
-
-    ${orders.length>0?`
-    <h3 style="font-size:16px;font-weight:800;color:var(--text-0);margin-bottom:14px;display:flex;align-items:center;gap:8px"><span style="width:3px;height:18px;background:var(--gold);border-radius:2px;display:inline-block"></span> داواکارییەکانم</h3>
-    ${orders.slice(-5).reverse().map(o=>`
-      <div style="background:var(--bg-2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <span style="font-size:30px">${o.emoji}</span>
-        <div style="flex:1">
-          <div style="font-size:14px;font-weight:700;color:var(--text-0)">${o.productName}</div>
-          <div style="font-size:12px;color:var(--text-3)">بۆ ${o.buyerName} · ${o.city}</div>
+  const el=document.getElementById('my-sales-list');
+  if(!myOrders.length){el.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text3)"><div style="font-size:3rem;margin-bottom:10px;opacity:.4">📋</div><div style="font-size:.85rem">هیچ فرۆشتنێکت نییە تاکوی ئێستا</div></div>';return;}
+  const p=gP();
+  el.innerHTML=myOrders.map(o=>{
+    const prod=p.find(x=>x.id===o.prodId);
+    const imgs=prod?.images?.filter(Boolean)||[];
+    const isDone=o.status==='done';
+    return `<div class="sold-item ${isDone?'':' sold-wait'}">
+      <div style="position:absolute;top:0;right:0;bottom:0;width:3px;background:${isDone?'var(--green)':'var(--orange)'}"></div>
+      <div class="sold-header">
+        <div class="sold-img">${imgs[0]?`<img src="${imgs[0]}">`:`<span>${prod?.em||'📦'}</span>`}</div>
+        <div style="flex:1;min-width:0">
+          <div class="sold-prod-name">${o.prod}</div>
+          <div class="sold-id">${o.id} — ${o.date}</div>
         </div>
-        <div style="text-align:left">
-          <div style="font-size:16px;font-weight:800;color:var(--gold)">${fmt(o.finalPrice)}</div>
-          <div style="font-size:11px;color:var(--emerald)">قازانج: +${fmt(o.profit)}</div>
-        </div>
-        <span class="tag ${o.status==='pending'?'tag-gold':'tag-emerald'}">${o.status==='pending'?'چاوەڕوان':'تەواوبوو'}</span>
-      </div>`).join('')}
-    `:''}
-
-    <div style="margin-top:20px">
-      <button class="btn-secondary" style="width:100%;justify-content:center" onclick="doLogout()">
-        <i class="fas fa-sign-out-alt"></i> دەرچوون لە هەژمار
-      </button>
+        <span class="sold-status ${isDone?'ss-done':'ss-wait'}">${isDone?'✓ تەواوبوو':'⏳ چاوەڕی بکە'}</span>
+      </div>
+      ${!isDone?`<div style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.2);border-radius:10px;padding:9px 12px;margin-bottom:8px;font-size:.78rem;color:var(--orange);text-align:center">⏳ چاوەڕی بکە تاوەکو تیمەکە کارەکانت تەواو دەکات</div>`:''}
+      <div class="sold-row"><span class="sold-lbl">نرخی فرۆشتن</span><span class="sold-val gold">${fp(o.price)}</span></div>
+      <div class="sold-row"><span class="sold-lbl">قازانجی تۆ</span><span class="sold-val green">+${fp(o.profit)}</span></div>
+      <div class="sold-row"><span class="sold-lbl">کڕیار یەکەم</span><span class="sold-val">${o.cust1.name} — ${o.cust1.phone}</span></div>
+      <div class="sold-row"><span class="sold-lbl">ناونیشان</span><span class="sold-val">${o.cust1.addr}</span></div>
+      ${o.cust2?`<div class="sold-row"><span class="sold-lbl">کڕیار دووەم</span><span class="sold-val">${o.cust2.name} — ${o.cust2.phone}</span></div>`:''}
     </div>`;
+  }).join('');
 }
 
-/* ─── SEARCH ─── */
-function doSearch() {
-  const q = document.getElementById('searchQ').value.trim().toLowerCase();
-  if(!q) return;
-  const products = DB.get('products')||[];
-  const res = products.filter(p=>p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||(p.city&&p.city.toLowerCase().includes(q)));
-  document.getElementById('searchLabel').textContent = res.length + ' ئەنجام دۆزرایەوە بۆ "'+document.getElementById('searchQ').value+'"';
-  document.getElementById('searchGrid').innerHTML = res.length>0
-    ? res.map(p=>productCardHTML(p)).join('')
-    : `<div class="empty-state"><i class="fas fa-search"></i><h3>ئەنجامێک نەدۆزرایەوە</h3><p>گەڕانەکەت بگۆڕە</p></div>`;
-  showPage('search');
+// ── INBOX ──
+function renderInbox(){
+  if(!cUser) return;
+  const allMsgs=gM().filter(m=>m.sellerId===cUser.id||m.sellerId==='all').sort((a,b)=>b.ts-a.ts);
+  const el=document.getElementById('inbox-list');
+  if(!allMsgs.length){el.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text3)"><div style="font-size:3rem;margin-bottom:10px;opacity:.4">✉️</div><div style="font-size:.85rem">هیچ نامەیەک نییە</div></div>';return;}
+  const isUnread=m=>!m.readBy||!m.readBy.includes(cUser.id);
+  el.innerHTML=allMsgs.map(m=>`
+    <div class="msg-item ${isUnread(m)?'unread':''}" onclick="openMsg('${m.id}')">
+      <div class="msg-sender">📮 بەڕێوەبەری بازاڕی کوردستان</div>
+      <div class="msg-subj">${m.subject}</div>
+      <div class="msg-prev">${m.body}</div>
+      <div class="msg-time">${new Date(m.ts).toLocaleDateString('ar-IQ')}</div>
+    </div>`).join('');
+  updateDots();
 }
-document.getElementById('searchQ').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
 
-/* ─── MODAL HELPERS ─── */
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
+function openMsg(id){
+  const allMsgs=gM();const m=allMsgs.find(x=>x.id===id);if(!m)return;
+  if(!m.readBy)m.readBy=[];
+  if(!m.readBy.includes(cUser.id))m.readBy.push(cUser.id);
+  sv(K_M,allMsgs);
+  document.getElementById('msg-subj-v').textContent=m.subject;
+  document.getElementById('msg-body-v').textContent=m.body;
+  document.getElementById('msg-time-v').textContent=new Date(m.ts).toLocaleString('ar-IQ');
+  open('sh-msg');updateDots();renderInbox();
 }
-document.querySelectorAll('.modal-overlay').forEach(m=>{
-  m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+
+function updateDots(){
+  if(!cUser)return;
+  const cnt=gM().filter(m=>(m.sellerId===cUser.id||m.sellerId==='all')&&(!m.readBy||!m.readBy.includes(cUser.id))).length;
+  ['inbox-dot','inbox-dot2','msg-nav-dot'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=cnt>0?'block':'none';});
+}
+
+// ── AUTH ──
+function doLogin(){
+  const e=document.getElementById('li-e').value.trim();
+  const p=document.getElementById('li-p').value;
+  if(!e||!p){notif('⚠️ ئیمەیڵ و وشەی تێپەڕین بنووسە','w');return;}
+  const u=gS().find(x=>x.email===e&&x.pw===p);
+  if(!u){notif('❌ ئیمەیڵ یان وشەی تێپەڕین هەڵەیە','e');return;}
+  cUser=u;
+  saveSession(u);
+  if(u.status==='pending'){showPage('page-pending');}
+  else{setupIn(u);showPage('page-home-in');fp2();notif('✓ بەخێربێیت '+u.name,'s');}
+}
+
+function doRegister(){
+  const name=document.getElementById('rg-n').value.trim();
+  const email=document.getElementById('rg-e').value.trim();
+  const phone=document.getElementById('rg-ph').value.trim();
+  const pw=document.getElementById('rg-pw').value;
+  const pw2=document.getElementById('rg-pw2').value;
+  const hf=document.getElementById('inp-f').files.length>0;
+  const hb=document.getElementById('inp-b').files.length>0;
+  if(!name||!email||!phone||!pw){notif('⚠️ هەموو بەندەکان پڕ بکەرەوە','w');return;}
+  if(pw!==pw2){notif('❌ وشەی تێپەڕین دووجار یەکسان نییە','e');return;}
+  if(!hf||!hb){notif('⚠️ هەر دوو لاپەڕەی کارتی ناسینەوە هەڵبژێرە','w');return;}
+  const sellers=gS();
+  if(sellers.find(s=>s.email===email)){notif('❌ ئەم ئیمەیڵە پێشتر تۆمار کراوە','e');return;}
+  const fF=document.getElementById('inp-f').files[0];
+  const fB=document.getElementById('inp-b').files[0];
+  const readImg=(f,cb)=>{const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(f);};
+  readImg(fF,cF=>readImg(fB,cB=>{
+    const nu={id:'s'+Date.now(),name,email,ph:phone,pw,status:'pending',date:new Date().toLocaleDateString('ar-IQ'),orders:0,cardF:cF,cardB:cB};
+    sellers.push(nu);sv(K_S,sellers);cUser=nu;saveSession(nu);
+    showPage('page-pending');notif('✓ حسابەکەت دروست کرا!','s');
+  }));
+}
+
+function doLogout(){cUser=null;cProd=null;clearSession();showPage('page-home');fp1();}
+
+function setupIn(u){
+  if(!u)return;
+  document.getElementById('u-name').textContent=u.name;
+  document.getElementById('u-av').textContent=u.name.charAt(0);
+  document.getElementById('wb').textContent='👋 بەخێربێیت، '+u.name+'!';
+  updateDots();
+}
+
+function prevCard(side,inp){
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    document.getElementById('prev-'+side).src=e.target.result;
+    document.getElementById('prev-'+side).style.display='block';
+    document.getElementById('cc-'+side).style.display='none';
+    document.getElementById('chk-'+side).style.display='flex';
+    document.getElementById('box-'+side).classList.add('has-img');
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+
+// ── PAGE NAV ──
+function goHome(){if(cUser&&cUser.status==='approved'){setupIn(cUser);showPage('page-home-in');fp2();}else showPage('page-home');}
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='page-home'){fp1();const prods=gP();const sellers=gS().filter(s=>s.status==='approved');const pe=document.getElementById('h-prods');const se=document.getElementById('h-sellers');if(pe)pe.textContent=prods.length||'٠';if(se)se.textContent=sellers.length||'٠';}
+  if(id==='page-home-in'&&cUser){setupIn(cUser);fp2();}
+  if(id==='page-my-sales'){renderMySales();}
+  if(id==='page-inbox'){renderInbox();}
+}
+
+// ── SHEETS ──
+function open(id){document.getElementById(id).classList.add('active');document.body.style.overflow='hidden';}
+function cls(id){document.getElementById(id).classList.remove('active');document.body.style.overflow='';}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o){o.classList.remove('active');document.body.style.overflow=''}}));
+
+// ── NOTIF ──
+function notif(msg,type){const n=document.getElementById('notif-bar');n.textContent=msg;n.style.borderTopColor=type==='e'?'var(--red)':type==='w'?'var(--gold)':'var(--green)';n.style.display='block';clearTimeout(n._t);n._t=setTimeout(()=>n.style.display='none',3500);}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  fp1();
+  // Restore session from localStorage
+  try{
+    const saved=localStorage.getItem(K_CU);
+    if(saved){
+      const u=JSON.parse(saved);
+      // Re-read from sellers list to get latest status
+      const fresh=gS().find(s=>s.id===u.id);
+      if(fresh){
+        cUser=fresh;
+        if(fresh.status==='pending'){showPage('page-pending');}
+        else{setupIn(fresh);showPage('page-home-in');fp2();}
+      } else { clearSession(); }
+    }
+  }catch(e){ clearSession(); }
+  setInterval(()=>{if(cUser)updateDots();},8000);
 });
-
-/* ─── TOAST ─── */
-function showToast(msg, type='info') {
-  const w = document.getElementById('toastWrap');
-  const t = document.createElement('div');
-  t.className = `toast t-${type}`;
-  const icons = {success:'fas fa-check-circle',error:'fas fa-exclamation-circle',info:'fas fa-info-circle'};
-  t.innerHTML = `<i class="${icons[type]||icons.info}" style="color:${type==='success'?'var(--emerald)':type==='error'?'var(--red)':'var(--gold)'}"></i> ${msg}`;
-  w.appendChild(t);
-  setTimeout(()=>t.remove(), 3800);
-}
-
-/* ─── HELPERS ─── */
-function fmt(n) {
-  return new Intl.NumberFormat('ku-IQ').format(n);
-}
-function catLabel(k) {
-  const m={cilubarg:'جل و بەرگ',eletron:'ئەلێکترۆنی',xwarin:'خواردنی',malbast:'ماڵ',kteb:'کتێب',warzish:'وەرزش'};
-  return m[k]||k;
-}
-
-/* ─── INIT ─── */
-renderNav();
-renderHome();
 </script>
 </body>
 </html>
