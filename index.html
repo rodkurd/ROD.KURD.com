@@ -771,6 +771,19 @@ async function cloudPull(){
         if(cur !== nw){ localStorage.setItem(k, nw); changed = true; }
       }
     });
+    // If logged in, check if status changed (e.g. admin approved account)
+    if(cUser && data[K_S]){
+      const sellers = Array.isArray(data[K_S]) ? data[K_S].filter(Boolean) : Object.values(data[K_S]);
+      const fresh = sellers.find(s => s.id === cUser.id);
+      if(fresh && fresh.status !== cUser.status){
+        const wasStatus = cUser.status;
+        cUser = fresh; saveSession(fresh);
+        if(fresh.status === 'approved' && wasStatus === 'pending'){
+          setupIn(fresh); showPage('page-home-in'); fp2();
+          notif('🎉 ئەکاونتەکەت پەسەندکرا! ئێستا دەتوانیت بفرۆشیت','s');
+        }
+      } else if(fresh){ cUser = fresh; saveSession(fresh); }
+    }
     // Re-render active page if data changed
     if(changed){
       const ap = document.querySelector('.page.active');
@@ -1273,49 +1286,62 @@ async function doRefresh(btn){
 function notif(msg,type){const n=document.getElementById('notif-bar');n.textContent=msg;n.style.borderTopColor=type==='e'?'var(--red)':type==='w'?'var(--gold)':'var(--green)';n.style.display='block';clearTimeout(n._t);n._t=setTimeout(()=>n.style.display='none',3500);}
 
 window.addEventListener('DOMContentLoaded',async ()=>{
-  // Show loading spinner while fetching Firebase
-  const g1 = document.getElementById('grid1');
-  if(g1) g1.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--text3)"><div style="font-size:2rem;animation:spin 1s linear infinite">⟳</div><div style="font-size:.8rem;margin-top:8px">بارکردن...</div></div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
-
+  // ── Step 1: Restore session from localStorage IMMEDIATELY (no waiting) ──
   try{
     const saved = localStorage.getItem(K_CU);
     if(saved){
       const u = JSON.parse(saved);
-      // Always fetch DIRECTLY from Firebase to get the freshest status
-      try{
-        const r = await fetch(FB_URL + '/data/bk_sellers.json');
-        if(r.ok){
-          const fbSellers = await r.json();
-          const sellers = Array.isArray(fbSellers) ? fbSellers.filter(Boolean) : (fbSellers ? Object.values(fbSellers) : []);
-          // Update localStorage with fresh sellers
-          localStorage.setItem(K_S, JSON.stringify(sellers));
-          const fresh = sellers.find(s => s.id === u.id);
-          if(fresh){
-            // Update saved session with fresh status
-            saveSession(fresh);
-            cUser = fresh;
-          }
-        }
-      }catch(e){
-        // Firebase failed - use localStorage as fallback
-        const fresh = gS().find(s => s.id === u.id);
-        if(fresh) cUser = fresh;
-      }
+      // Use saved session right away so user is never logged out on refresh
+      cUser = u;
+      if(u.status === 'pending'){ showPage('page-pending'); }
+      else{ setupIn(u); showPage('page-home-in'); fp2(); }
+    }
+  }catch(e){}
 
-      if(cUser){
-        if(cUser.status === 'pending'){ showPage('page-pending'); }
-        else{ setupIn(cUser); showPage('page-home-in'); fp2(); }
-      } else {
-        clearSession();
+  // ── Step 2: Pull fresh data from Firebase in background ──
+  try{
+    const r = await fetch(FB_URL + '/data.json');
+    if(r.ok){
+      const data = await r.json();
+      if(data){
+        // Save all fresh data to localStorage
+        CLOUD_KEYS_ALL.forEach(k=>{
+          if(data[k]!==undefined) localStorage.setItem(k, JSON.stringify(data[k]));
+        });
+        // If user is logged in, refresh their status from Firebase
+        if(cUser){
+          const sellers = data[K_S] || [];
+          const arr = Array.isArray(sellers) ? sellers.filter(Boolean) : Object.values(sellers);
+          const fresh = arr.find(s => s.id === cUser.id);
+          if(fresh){
+            const wasStatus = cUser.status;
+            cUser = fresh;
+            saveSession(fresh);
+            // If status changed (e.g. pending → approved), redirect
+            if(wasStatus !== fresh.status){
+              if(fresh.status === 'pending'){ showPage('page-pending'); }
+              else{ setupIn(fresh); showPage('page-home-in'); fp2(); notif('✓ ئەکاونتەکەت پەسەندکرا!','s'); }
+            } else {
+              // Refresh current page with new data
+              const ap = document.querySelector('.page.active');
+              if(ap && ap.id==='page-home-in') fp2();
+            }
+          }
+          // If seller not found in Firebase, keep using localStorage session (don't log out)
+        } else {
+          // Not logged in - render guest home
+          fp1();
+        }
+        showSyncDot('ok');
       }
     }
-  }catch(e){ clearSession(); }
+  }catch(e){
+    showSyncDot('err');
+    // Firebase failed - just render with localStorage data
+    if(!cUser) fp1();
+  }
 
-  // Pull all data and render home
-  await cloudPull();
-  // Platform pushes directly on order, so 30s polling is enough as fallback
   setInterval(cloudPull, 30000);
-  if(!cUser) fp1();
   setInterval(()=>{ if(cUser) updateDots(); }, 8000);
 });
 
