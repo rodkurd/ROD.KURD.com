@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>بازاڕی کوردستان</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -19,7 +20,7 @@
   --r:18px;--r2:14px;--r3:12px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{font-family:'Noto Sans Arabic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:15px}
+html,body{font-family:'Vazirmatn','Noto Sans Arabic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:15px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(234,179,8,.25);border-radius:4px}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 80% 0%,rgba(234,179,8,.05) 0%,transparent 55%),radial-gradient(ellipse at 10% 80%,rgba(245,158,11,.03) 0%,transparent 45%);pointer-events:none;z-index:0}
 
@@ -39,12 +40,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tnav-gold{background:var(--grad);color:#000;box-shadow:0 3px 12px rgba(234,179,8,.28)}
 
 /* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:500;height:var(--bot-h);background:rgba(7,9,15,.96);backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:0 4px;padding-bottom:env(safe-area-inset-bottom,0)}
-.bnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:7px 10px;border-radius:12px;transition:all .2s;flex:1;max-width:72px;position:relative}
-.bnav-item.active{background:rgba(234,179,8,.08)}
-.bnav-icon{font-size:1.2rem;color:var(--text3);transition:color .2s}
-.bnav-lbl{font-size:.65rem;font-weight:600;color:var(--text3);transition:color .2s;text-align:center}
-.bnav-item.active .bnav-icon,.bnav-item.active .bnav-lbl{color:var(--gold)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:500;height:var(--bot-h);background:rgba(7,9,15,.97);backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:0 4px;padding-bottom:env(safe-area-inset-bottom,0)}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:7px 12px;border-radius:14px;transition:all .25s;flex:1;max-width:76px;position:relative}
+.bnav-item.active{background:rgba(234,179,8,.1)}
+.bnav-icon{font-size:1.4rem;color:var(--text3);transition:all .25s;filter:grayscale(1) opacity(.5)}
+.bnav-lbl{font-size:.62rem;font-weight:700;color:var(--text3);transition:color .2s;text-align:center;letter-spacing:-.2px}
+.bnav-item.active .bnav-icon{color:var(--gold);filter:none;transform:translateY(-2px);filter:drop-shadow(0 2px 6px rgba(234,179,8,.5))}
+.bnav-item.active .bnav-lbl{color:var(--gold)}
 .bnav-dot{position:absolute;top:5px;right:10px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1.5px solid var(--bg);display:none}
 
 /* HERO */
@@ -52,7 +54,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:240px;height:120px;background:radial-gradient(ellipse,rgba(234,179,8,.07) 0%,transparent 70%);pointer-events:none}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.22);border-radius:50px;padding:4px 12px;font-size:.75rem;color:var(--gold2);margin-bottom:12px;animation:pb 3s infinite}
 @keyframes pb{0%,100%{border-color:rgba(234,179,8,.22)}50%{border-color:rgba(234,179,8,.55)}}
-.hero-title{font-size:1.65rem;font-weight:900;line-height:1.2;margin-bottom:8px;background:linear-gradient(135deg,#fff 0%,var(--gold2) 55%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-title{font-size:1.85rem;font-weight:900;line-height:1.2;margin-bottom:8px;background:linear-gradient(135deg,#fff 0%,var(--gold2) 55%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.5px}
 .hero-sub{font-size:.85rem;color:var(--text2);line-height:1.7;margin-bottom:16px}
 .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:2px}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:10px 8px;text-align:center}
@@ -147,12 +149,20 @@ textarea.finput{min-height:75px;resize:none}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 
 /* CARD UPLOADS */
-.card-uploads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.cup-box{background:rgba(255,255,255,.03);border:2px dashed rgba(234,179,8,.22);border-radius:var(--r2);padding:12px 8px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.cup-box.has-img{border-color:var(--gold);background:rgba(234,179,8,.06)}
-.cup-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
-.cup-prev{width:100%;height:80px;object-fit:cover;border-radius:8px;display:none}
-.cup-chk{position:absolute;top:5px;right:5px;background:var(--green);color:#fff;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:.7rem;font-weight:700}
+.card-uploads{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.cup-box{background:rgba(255,255,255,.03);border:2px dashed rgba(234,179,8,.3);border-radius:var(--r2);padding:0;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.cup-box:active,.cup-box:focus{border-color:var(--gold);background:rgba(234,179,8,.08);transform:scale(.97)}
+.cup-box.has-img{border-color:var(--gold);border-style:solid;background:rgba(234,179,8,.06)}
+.cup-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0;width:100%;height:100%;z-index:10}
+.cup-prev{width:100%;height:110px;object-fit:cover;border-radius:calc(var(--r2) - 2px);display:none}
+.cup-chk{position:absolute;top:7px;right:7px;background:var(--green);color:#fff;width:22px;height:22px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;z-index:5;box-shadow:0 2px 8px rgba(16,185,129,.5)}
+.cup-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:18px 10px;width:100%}
+.cup-icon-wrap{width:52px;height:52px;border-radius:14px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.25);display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:all .3s}
+.cup-box:active .cup-icon-wrap{background:rgba(234,179,8,.22);transform:scale(.9)}
+.cup-title{font-size:.82rem;font-weight:800;color:var(--text);margin-top:2px}
+.cup-hint{font-size:.68rem;color:var(--gold);font-weight:600;background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.2);border-radius:50px;padding:3px 9px;margin-top:2px}
+/* pulse animation on upload box */
+@keyframes cupPulse{0%,100%{border-color:rgba(234,179,8,.3)}50%{border-color:rgba(234,179,8,.65);box-shadow:0 0 0 4px rgba(234,179,8,.06)}}
 
 /* PRICE */
 .pricebox{background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.2);border-radius:var(--r2);padding:12px;margin-bottom:12px}
@@ -310,17 +320,27 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
         <div class="fgroup"><label class="flabel">وشەی تێپەڕین</label><input class="finput" type="password" placeholder="••••••••" id="rg-pw"></div>
         <div class="fgroup"><label class="flabel">دووبارە</label><input class="finput" type="password" placeholder="••••••••" id="rg-pw2"></div>
       </div>
-      <label class="flabel" style="margin-bottom:9px">🪪 وێنەی کارتی ناسینەوە</label>
+      <label class="flabel" style="margin-bottom:11px;font-size:.85rem;display:flex;align-items:center;gap:7px"><span style="font-size:1.1rem">🪪</span> وێنەی کارتی ناسینەوە <span style="font-size:.72rem;color:var(--text3);font-weight:400">(هەر دوو لا پێویستن)</span></label>
       <div class="card-uploads">
-        <div class="cup-box" id="box-f" onclick="document.getElementById('inp-f').click()">
-          <input type="file" id="inp-f" accept="image/*" capture="environment" onchange="prevCard('f',this)">
-          <img class="cup-prev" id="prev-f" alt=""><div class="cup-chk" id="chk-f">✓</div>
-          <div id="cc-f"><div style="font-size:1.8rem">🪪</div><div style="font-size:.75rem;font-weight:700;margin-top:5px">پێشەوەی کارت</div><div style="font-size:.65rem;color:var(--text3);margin-top:3px">کلیک بکە</div></div>
+        <div class="cup-box" id="box-f">
+          <input type="file" id="inp-f" accept="image/*" onchange="prevCard('f',this)">
+          <img class="cup-prev" id="prev-f" alt="">
+          <div class="cup-chk" id="chk-f">✓</div>
+          <div class="cup-inner" id="cc-f">
+            <div class="cup-icon-wrap">🪪</div>
+            <div class="cup-title">پێشەوەی کارت</div>
+            <div class="cup-hint">📸 گەلەری بکەرەوە</div>
+          </div>
         </div>
-        <div class="cup-box" id="box-b" onclick="document.getElementById('inp-b').click()">
-          <input type="file" id="inp-b" accept="image/*" capture="environment" onchange="prevCard('b',this)">
-          <img class="cup-prev" id="prev-b" alt=""><div class="cup-chk" id="chk-b">✓</div>
-          <div id="cc-b"><div style="font-size:1.8rem">🪪</div><div style="font-size:.75rem;font-weight:700;margin-top:5px">دواوەی کارت</div><div style="font-size:.65rem;color:var(--text3);margin-top:3px">کلیک بکە</div></div>
+        <div class="cup-box" id="box-b">
+          <input type="file" id="inp-b" accept="image/*" onchange="prevCard('b',this)">
+          <img class="cup-prev" id="prev-b" alt="">
+          <div class="cup-chk" id="chk-b">✓</div>
+          <div class="cup-inner" id="cc-b">
+            <div class="cup-icon-wrap">🪪</div>
+            <div class="cup-title">دواوەی کارت</div>
+            <div class="cup-hint">📸 گەلەری بکەرەوە</div>
+          </div>
         </div>
       </div>
       <button class="btn btn-gold" onclick="doRegister()">تۆمارکردن و چاوەڕوانی پەسەندکردن</button>
@@ -844,10 +864,17 @@ function prevCard(side,inp){
   if(!inp.files||!inp.files[0])return;
   const r=new FileReader();
   r.onload=e=>{
-    document.getElementById('prev-'+side).src=e.target.result;
-    document.getElementById('prev-'+side).style.display='block';
+    const prev=document.getElementById('prev-'+side);
+    prev.src=e.target.result;
+    prev.style.display='block';
+    prev.style.position='absolute';
+    prev.style.inset='0';
+    prev.style.width='100%';
+    prev.style.height='100%';
+    prev.style.borderRadius='calc(var(--r2) - 2px)';
     document.getElementById('cc-'+side).style.display='none';
-    document.getElementById('chk-'+side).style.display='flex';
+    const chk=document.getElementById('chk-'+side);
+    chk.style.display='flex';
     document.getElementById('box-'+side).classList.add('has-img');
   };
   r.readAsDataURL(inp.files[0]);
