@@ -745,9 +745,89 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 </div>
 
 <script>
+
+// ═══════════════════════════════════════
+// ☁️ CLOUD SYNC — JSONBin.io
+// ═══════════════════════════════════════
+const CLOUD_KEYS_ALL = ['bk_sellers','bk_products','bk_orders','bk_messages'];
+let _cloudPushTimer = null;
+let _cloudBusy = false;
+
+function cloudCfg(){
+  try{
+    const s=localStorage.getItem('bk_cloud_cfg');
+    return s?JSON.parse(s):null;
+  }catch(e){return null;}
+}
+function cloudSaveCfg(key,bin){
+  try{localStorage.setItem('bk_cloud_cfg',JSON.stringify({key,bin}));}catch(e){}
+}
+
+async function cloudPull(){
+  const cfg=cloudCfg();
+  if(!cfg||!cfg.key||!cfg.bin) return false;
+  try{
+    const r=await fetch(`https://api.jsonbin.io/v3/b/${cfg.bin}/latest`,{
+      headers:{'X-Master-Key':cfg.key,'X-Bin-Meta':'false'}
+    });
+    if(!r.ok) return false;
+    const data=await r.json();
+    CLOUD_KEYS_ALL.forEach(k=>{
+      if(data[k]!==undefined){
+        try{localStorage.setItem(k,JSON.stringify(data[k]));}catch(e){}
+      }
+    });
+    showSyncDot('✓');
+    return true;
+  }catch(e){showSyncDot('!');return false;}
+}
+
+async function cloudPush(){
+  const cfg=cloudCfg();
+  if(!cfg||!cfg.key||!cfg.bin||_cloudBusy) return;
+  _cloudBusy=true;
+  const data={};
+  CLOUD_KEYS_ALL.forEach(k=>{
+    try{data[k]=JSON.parse(localStorage.getItem(k)||'[]');}catch(e){data[k]=[];}
+  });
+  try{
+    await fetch(`https://api.jsonbin.io/v3/b/${cfg.bin}`,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':cfg.key},
+      body:JSON.stringify(data)
+    });
+    showSyncDot('✓');
+  }catch(e){showSyncDot('!');}
+  _cloudBusy=false;
+}
+
+function schedulePush(){
+  if(!cloudCfg()) return;
+  clearTimeout(_cloudPushTimer);
+  _cloudPushTimer=setTimeout(cloudPush,900);
+}
+
+function showSyncDot(state){
+  const d=document.getElementById('sync-dot');
+  if(!d) return;
+  d.style.display='flex';
+  d.textContent=state==='✓'?'☁️':'⚠️';
+  clearTimeout(d._t);
+  d._t=setTimeout(()=>d.style.display='none',2200);
+}
+
+// Sync code: base64 of {key,bin}
+function decodeSyncCode(code){
+  try{return JSON.parse(atob(code));}catch(e){return null;}
+}
+function encodeSyncCode(key,bin){
+  return btoa(JSON.stringify({key,bin}));
+}
+
+
 const K_S='bk_sellers',K_P='bk_products',K_O='bk_orders',K_M='bk_messages';
 function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
-function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} schedulePush();}
 const gS=()=>ld(K_S,[]);
 const gP=()=>ld(K_P,[]);
 const gO=()=>ld(K_O,[]);
@@ -1140,8 +1220,17 @@ document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{
 // ── NOTIF ──
 function notif(msg,type){const n=document.getElementById('notif-bar');n.textContent=msg;n.style.borderTopColor=type==='e'?'var(--red)':type==='w'?'var(--gold)':'var(--green)';n.style.display='block';clearTimeout(n._t);n._t=setTimeout(()=>n.style.display='none',3500);}
 
-window.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('DOMContentLoaded',async ()=>{
+  // Pull cloud data first (if configured)
+  if(cloudCfg()){
+    showSyncDot('...');
+    await cloudPull();
+    // poll every 12 seconds
+    setInterval(cloudPull, 12000);
+  }
   fp1();
+  // Show sync setup banner if no cloud config
+  checkCloudSetup();
   try{
     const saved=localStorage.getItem(K_CU);
     if(saved){
@@ -1156,6 +1245,27 @@ window.addEventListener('DOMContentLoaded',()=>{
   }catch(e){ clearSession(); }
   setInterval(()=>{if(cUser)updateDots();},8000);
 });
+
+function checkCloudSetup(){
+  const cfg=cloudCfg();
+  const banner=document.getElementById('cloud-setup-banner');
+  if(!banner) return;
+  if(cfg&&cfg.key&&cfg.bin){ banner.style.display='none'; return; }
+  banner.style.display='flex';
+}
+
+function submitSyncCode(){
+  const code=document.getElementById('sync-code-inp').value.trim();
+  if(!code){notif('⚠️ کۆدی هاوکاری بنووسە','w');return;}
+  const d=decodeSyncCode(code);
+  if(!d||!d.key||!d.bin){notif('❌ کۆدی هەڵەیە','e');return;}
+  cloudSaveCfg(d.key,d.bin);
+  document.getElementById('cloud-setup-banner').style.display='none';
+  cloudPull().then(ok=>{
+    if(ok){notif('✓ هاوکاری سەرکەوتوو بوو! داتاکان هاتنەوە','s');fp1();fp2();}
+    else{notif('❌ کۆدەکە کار نەکرد، دووبارە هەوڵبدەرەوە','e');cloudSaveCfg('','');}
+  });
+}
 </script>
 </body>
 </html>
