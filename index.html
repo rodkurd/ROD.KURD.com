@@ -389,6 +389,14 @@ function renderNav() {
       </div>
       <button class="nbtn nbtn-ghost" onclick="logout()">دەرچوون</button>`;
     el('pbar').style.display = user.approved ? 'none' : 'flex';
+  } else if(localStorage.getItem('km_registered')==='1') {
+    el('navRight').innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:20px;padding:5px 12px">
+        <span style="font-size:14px">⏳</span>
+        <span style="font-size:11px;color:var(--amber)">وەرگیراوە — چاوەڕووی پەسەندکردن</span>
+      </div>
+      <button class="nbtn nbtn-ghost" style="font-size:11px;padding:6px 10px" onclick="clearRegistered()">✕</button>`;
+    el('pbar').style.display = 'none';
   } else {
     el('navRight').innerHTML = `
       <button class="nbtn nbtn-ghost" onclick="openAuth('login')">چوونەژوورەوە</button>
@@ -876,9 +884,12 @@ function doRegister() {
   DB.set('sellers', sellers);
   user = newSeller;
   saveSession(user);
+  localStorage.setItem('km_registered','1');
   closeOv(); renderNav(); renderHome();
   showToast('ئەکاونتەکەت تۆمارکرا — چاوەڕێی پەسەندکردن');
 }
+
+function clearRegistered() { localStorage.removeItem('km_registered'); renderNav(); }
 
 function doLogin() {
   const em=el('l_email')?.value?.trim(), pw=el('l_pass')?.value?.trim();
@@ -886,6 +897,7 @@ function doLogin() {
   const found = DB.get('sellers').find(s=>s.email===em&&s.password===pw);
   if(!found){showToast('ئیمەیڵ یان پاسۆرد هەڵەیە',true);return;}
   user = found;
+  localStorage.removeItem('km_registered');
   saveSession(user);
   closeOv(); renderNav();
   if(activeTab==='home') renderHome(); else setTab(activeTab);
